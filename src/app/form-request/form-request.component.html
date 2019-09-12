@@ -1,0 +1,121 @@
+<div class="container">
+  <h1>Gas Cylinder Order Form</h1>
+</div>
+<br>
+<mat-card class="container">
+  <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
+    <h3>Requester Info</h3>
+    <div class="row">
+      <mat-form-field class="col-md-6 col-sm-12">
+        <input matInput placeholder="Requested By" formControlName="order_requester" required>
+      </mat-form-field>
+
+      <mat-form-field class="col-md-6 col-sm-12">
+        <input matInput placeholder="Supervisor" aria-label="Manager" formControlName="order_manager" [matAutocomplete]="auto"
+               required>
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+            {{ option.name }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint>Please type in your manager's name and select from the Autocomplete list.</mat-hint>
+        <mat-error *ngIf="requestForm.get('order_manager').dirty && requestForm.get('order_manager').hasError('notInList')">
+          Please choose a manager from the list.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <mat-form-field class="col-md-6 col-sm-12">
+        <input matInput placeholder="Phone Number" formControlName="order_requester_phone">
+      </mat-form-field>
+    </div>
+
+    <br>
+    <h3>Vendor Info</h3>
+    <div class="row">
+      <mat-form-field class="col-md-6 col-sm-12">
+        <mat-label>Vendor</mat-label>
+        <mat-select formControlName="order_vendor" required>
+          <mat-option value="Google">
+            Google
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <button mat-raised-button>Add a New Vendor</button>
+      </div>
+    </div>
+
+    <br><br>
+    <h3>Order Info</h3>
+    <div formArrayName="order_items" *ngFor="let item of requestForm.get('order_items').controls; let i = index;" class="row">
+      <div [formGroupName]="i">
+        <mat-form-field class="col-md-4 col-sm-12">
+          <input matInput placeholder="Cat#" formControlName="order_name" required>
+        </mat-form-field>
+        <mat-form-field class="col-md-4 col-sm-12">
+          <input matInput placeholder="Quantity" formControlName="order_quantity" required type="number" min="0.00" step="1">
+        </mat-form-field>
+        <mat-form-field class="col-md-4 col-sm-12">
+          <span matPrefix>$ &nbsp;</span>
+          <input matInput placeholder="Unit Price" formControlName="order_unit_price" required type="number" min="0.00" step="0.01">
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-12">
+          <input matInput placeholder="Description" formControlName="order_description">
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 col-sm-12">
+        <button mat-raised-button type="button" (click)="this.addItem()">Add a New Order</button>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <mat-form-field class="col-md-6 col-sm-12">
+        <span matPrefix>$ &nbsp;</span>
+        <input matInput placeholder="Shipment Cost" formControlName="order_shipment_cost" type="number" min="0.00" step="0.01">
+      </mat-form-field>
+      <mat-form-field class="col-md-6 col-sm-12">
+        <span matPrefix>$ &nbsp;</span>
+        <input matInput placeholder="Total Cost (auto-calculated)" formControlName="order_total_cost" readonly="readonly">
+      </mat-form-field>
+    </div>
+
+    <br><br>
+<!--    <h3>Accounting Info</h3>-->
+<!--    <div class="row">-->
+<!--      <mat-form-field class="col-md-4 col-sm-12">-->
+<!--        <input matInput placeholder="Authorized By" formControlName="order_authorized" required>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="col-md-4 col-sm-12">-->
+<!--        <input matInput placeholder="PO Number" formControlName="order_po" required>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="col-md-4 col-sm-12">-->
+<!--        <input matInput placeholder="Payment Terms" formControlName="order_payment_terms" required>-->
+<!--      </mat-form-field>-->
+<!--      <mat-form-field class="col-md-6 col-sm-12">-->
+<!--        <textarea matInput placeholder="Account(s) To Be Charged" formControlName="order_accounts"></textarea>-->
+<!--      </mat-form-field>-->
+<!--    </div>-->
+    <div class="row">
+      <div class="col-md-12">
+        <br>
+        <button type="submit" mat-raised-button [disabled]="!requestForm.valid">Submit</button>
+      </div>
+    </div>
+  </form>
+
+  <br><br>
+  <ngb-alert *ngIf="succeed === true" type="success" [dismissible]="false">Your request is submitted successfully. This
+    page will refresh in 3 seconds.
+  </ngb-alert>
+  <ngb-alert *ngIf="succeed === false" type="danger" [dismissible]="false">There was something wrong in the system.
+    Please try again or contact admin.
+  </ngb-alert>
+</mat-card>
+

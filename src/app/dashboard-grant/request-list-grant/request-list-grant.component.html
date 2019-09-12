@@ -1,0 +1,34 @@
+<ul class="nav nav-pills">
+  <li class="nav-item">
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('approved')" [class.active]="dashboardStatus == 'approved'">Approved</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('granted')" [class.active]="dashboardStatus == 'granted'">Granted</a>
+  </li>
+</ul>
+<br>
+<table width='100%' class="table table-striped" matSort (matSortChange)="sortData.emit($event)">
+  <tr>
+    <th mat-sort-header="created_date">Created Date</th>
+    <th mat-sort-header="first_name">First Name</th>
+    <th mat-sort-header="last_name">Last Name</th>
+    <th>Email</th>
+    <th mat-sort-header="category">Category</th>
+    <th>Manager</th>
+    <th>Status</th>
+    <th *ngIf="dashboardStatus == 'approved'">Response</th>
+  </tr>
+
+  <tr *ngFor="let request of requests | async | slice:(pageSize*pageIndex):(pageSize*pageIndex+pageSize)">
+    <td>{{ request.created_date | date:'medium' }}</td>
+    <td>{{ request.first_name }}</td>
+    <td>{{ request.last_name }}</td>
+    <td>{{ request.email }}</td>
+    <td>{{ request.category }}</td>
+    <td>{{ request.manager }}</td>
+    <td>{{ request.status }}</td>
+    <td *ngIf="dashboardStatus == 'approved'">
+      <button class="btn btn-success" (click)="requestGranted.emit(request)">Grant</button>
+    </td>
+  </tr>
+</table>
