@@ -132,7 +132,7 @@ export class DashboardComponent implements OnInit {
   // Mat dialog for view request detail
   openDialog(request: any): void {
     const dialogRef = this.dialog.open(RequestDetailComponent, {
-      width: '950px',
+      width: '1000px',
       data: request
     });
     dialogRef.afterClosed().subscribe(result => {

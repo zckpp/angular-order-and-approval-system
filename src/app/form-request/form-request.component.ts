@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {managers, Manager} from '../manager';
-import {CategoryGroup} from '../category';
 import {FormControl, Validators, FormBuilder, FormArray, FormGroup} from '@angular/forms';
 import {Observable,} from 'rxjs';
-import {map, startWith, debounceTime, tap, distinctUntilChanged} from 'rxjs/operators';
+import {map, startWith, debounceTime, tap, distinctUntilChanged, filter, switchMap, mergeMap} from 'rxjs/operators';
 import {ApiService} from '../api.service';
 
 // making sure user choose from the manager list
@@ -34,17 +33,24 @@ export class FormRequestComponent implements OnInit {
   // variables
   // import manager and category field data
   managers: Manager[] = managers;
-  categoryGroups$: Observable<CategoryGroup[]>;
+  vendors$: Observable<any>;
   // init autocomplete field: manager
   filteredOptions: Observable<Manager[]>;
   // variable if request is successfully submitted
   succeed: boolean = null;
 
   ngOnInit() {
+    this.vendors$ = this.apiService.readVendors();
+
     this.requestForm = this.fb.group({
       order_requester: ['', Validators.required],
       order_requester_phone: ['', Validators.required],
-      order_vendor: ['', Validators.required],
+      order_vendor: this.fb.group({
+        order_vendor_name: [''],
+        order_vendor_address: [''],
+        order_vendor_phone: [''],
+        order_vendor_fax: ['']
+      }),
       order_manager: ['', [Validators.required, validateManager]],
       order_shipment_cost: [''],
       order_total_cost: [{value: ''}],
@@ -53,6 +59,7 @@ export class FormRequestComponent implements OnInit {
       order_payment_terms: [''],
       order_accounts: [''],
       order_items: this.fb.array([this.createItem()]),
+      status: [''],
     });
 
     this.filteredOptions = this.requestForm.get('order_manager').valueChanges.pipe(
@@ -62,11 +69,10 @@ export class FormRequestComponent implements OnInit {
       map(name => name ? this._filter(name) : this.managers.slice()),
     );
 
-    // this.categoryGroups$ = this.apiService.readCategories();
-
     // auto calculate total price, and init total price with 0 otherwise it will show [object object]
     this.calculateTotalPrice();
-    this.requestForm.get('order_total_cost').setValue(0, {emitEvent : false});
+    this.vendorInfo();
+    this.requestForm.get('order_total_cost').setValue(0, {emitEvent: false});
   }
 
   // methods
@@ -76,6 +82,7 @@ export class FormRequestComponent implements OnInit {
     return this.managers.filter(option => option.name.toLowerCase().indexOf(filterValue) !== -1);
   }
 
+  // dynamically add order fields
   createItem(): FormGroup {
     return this.fb.group({
       order_name: '',
@@ -90,16 +97,36 @@ export class FormRequestComponent implements OnInit {
     this.items.push(this.createItem());
   }
 
+  // auto fill vendor info
+  vendorInfo() {
+    this.requestForm.get('order_vendor.order_vendor_name').valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      switchMap(value => this.vendors$.pipe(
+        // TODO: tried using filter instead of map but did not work
+        map(vendors => {
+          return vendors.filter(vendor => { return vendor.vendor_name == value });
+        })
+        )
+      )
+    ).subscribe(val => {
+      val = val[0];
+      this.requestForm.get('order_vendor.order_vendor_address').setValue(val.vendor_address, {emitEvent: false});
+      this.requestForm.get('order_vendor.order_vendor_phone').setValue(val.vendor_phone, {emitEvent: false});
+      this.requestForm.get('order_vendor.order_vendor_fax').setValue(val.vendor_fax, {emitEvent: false});
+    });
+  }
+
   calculateTotalPrice() {
-    this.requestForm.valueChanges.pipe(debounceTime(1000), distinctUntilChanged()).subscribe( val => {
+    this.requestForm.valueChanges.pipe(debounceTime(1000), distinctUntilChanged()).subscribe(val => {
       let cost = 0;
       if (val.order_shipment_cost > 0 || (val.order_items[0].order_unit_price > 0)) {
         val.order_items.forEach(item => {
-          cost += item.order_quantity*item.order_unit_price;
+          cost += item.order_quantity * item.order_unit_price;
         });
         cost += val.order_shipment_cost;
         // Use emitEvent: false option to avoid triggering form valueChanges
-        this.requestForm.get('order_total_cost').setValue(cost, {emitEvent : false});
+        this.requestForm.get('order_total_cost').setValue(cost, {emitEvent: false});
       }
     });
   }

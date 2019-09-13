@@ -1,49 +1,72 @@
 <div mat-dialog-content>
-  <h4>Requester Info</h4>
-  <div class="row">
-    <div class="col-md-4">
-      Requested by: <strong>{{ data.order_requester }}</strong>
-    </div>
-    <div class="col-md-4">
-      Phone number: <strong>{{ data.order_requester_phone }}</strong>
-    </div>
-  </div>
-  <br>
-  <h4>Vendor Info</h4>
   <div class="row">
     <div class="col-md-6">
-      Requested by: <strong>{{ data.order_vendor }}</strong>
+      <h4>Requester Info</h4>
+      <div class="row">
+        <div class="col-md-4">Requested by:</div>
+        <div class="col-md-8"><strong>{{ data.order_requester }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Phone number:</div>
+        <div class="col-md-8"><strong>{{ data.order_requester_phone }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Supervisor:</div>
+        <div class="col-md-8"><strong>{{ data.order_manager }}</strong></div>
+      </div>
+      <br>
+      <h4>Vendor Info</h4>
+      <div class="row">
+        <div class="col-md-4">Vendor Name:</div>
+        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_name }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Address:</div>
+        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_address }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Phone Number:</div>
+        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_phone }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Fax:</div>
+        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_fax }}</strong></div>
+      </div>
     </div>
-    <div class="col-md-6">
 
-    </div>
-  </div>
-  <br>
-  <h4>Order Info</h4>
-  <div class="row" *ngFor="let order of data.order_items">
-    <div class="col-md-4">
-      Cat#: <strong>{{ order.order_name }}</strong>
-    </div>
-    <div class="col-md-4">
-      Quantity: <strong>{{ order.order_quantity }}</strong>
-    </div>
-    <div class="col-md-4">
-      Unit Price: <strong>{{ order.order_unit_price | currency }}</strong>
-    </div>
-    <div class="col-md-4">
-      Description: <strong>{{ order.order_description }}</strong>
-    </div>
-    <div class="col-md-12"><br></div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      Shipment Cost: <strong>{{ data.order_shipment_cost | currency }}</strong>
-    </div>
-    <div class="col-md-4">
-      Total Cost: <strong>{{ data.order_total_cost | currency }}</strong>
+    <div class="col-md-6">
+      <h4>Order Info</h4>
+      <div *ngFor="let order of data.order_items">
+        <div class="row">
+          <div class="col-md-4">Cat#:</div>
+          <div class="col-md-8"><strong>{{ order.order_name }}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Description:</div>
+          <div class="col-md-8"><strong>{{ order.order_description }}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Quantity:</div>
+          <div class="col-md-8"><strong>{{ order.order_quantity}}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Unit Price:</div>
+          <div class="col-md-8"><strong>{{ order.order_unit_price | currency }}</strong></div>
+        </div>
+        <div class="row"><br></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Shipment Cost:</div>
+        <div class="col-md-8"><strong>{{ data.order_shipment_cost | currency }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-md-4">Total Cost:</div>
+        <div class="col-md-8"><strong>{{ data.order_total_cost | currency }}</strong></div>
+      </div>
     </div>
   </div>
 </div>
+
 <div mat-dialog-actions>
   <br>
   <button mat-button (click)="onNoClick()">Close</button>

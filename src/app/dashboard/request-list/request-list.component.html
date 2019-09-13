@@ -26,7 +26,7 @@
   <tr *ngFor="let request of requests | async | slice:(pageSize*pageIndex):(pageSize*pageIndex+pageSize)">
     <td>{{ request.createdAt | date:'medium' }}</td>
     <td>{{ request.order_requester }}</td>
-    <td>{{ request.order_vendor }}</td>
+    <td>{{ request.order_vendor.order_vendor_name }}</td>
     <td>{{ request.status }}</td>
     <td>
       <button mat-raised-button (click)="viewDetail.emit(request)">View Detail</button>

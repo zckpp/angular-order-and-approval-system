@@ -9,8 +9,8 @@ import {tap, map} from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ApiService {
-  API_SERVER = "http://localhost:3000/orders";
-
+  API_SERVER = 'http://localhost:3000/orders';
+  VENDOR = 'http://localhost:4200/assets/vendors.json';
   constructor(private httpClient: HttpClient) {
   }
 
@@ -53,23 +53,7 @@ export class ApiService {
     return this.httpClient.delete<Request>(`${this.API_SERVER}/delete.php/?id=${id}`);
   }
 
-  readCategories(): Observable<CategoryGroup[]> {
-    return this.httpClient.get<any>(`${this.API_SERVER}/readCategory.php`).pipe(
-      // sort alphabetically by category
-      tap(categoryGroups => {
-        categoryGroups.forEach(function (categoryGroup) {
-          categoryGroup.category.sort((a, b) => {
-            if (a.label < b.label) {
-              return -1;
-            }
-            if (a.label > b.label) {
-              return 1;
-            }
-            return 0;
-          });
-        });
-      })
-    );
+  readVendors(): Observable<any> {
+    return this.httpClient.get<any>(this.VENDOR).pipe();
   }
-
 }
