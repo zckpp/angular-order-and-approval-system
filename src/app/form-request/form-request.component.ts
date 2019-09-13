@@ -105,30 +105,32 @@ export class FormRequestComponent implements OnInit {
       switchMap(value => this.vendors$.pipe(
         // TODO: tried using filter instead of map but did not work
         map(vendors => {
-          return vendors.filter(vendor => { return vendor.vendor_name == value });
+          return vendors.filter(vendor => {
+            return vendor.vendor_name == value
+          })[0];
         })
         )
       )
     ).subscribe(val => {
-      val = val[0];
       this.requestForm.get('order_vendor.order_vendor_address').setValue(val.vendor_address, {emitEvent: false});
       this.requestForm.get('order_vendor.order_vendor_phone').setValue(val.vendor_phone, {emitEvent: false});
       this.requestForm.get('order_vendor.order_vendor_fax').setValue(val.vendor_fax, {emitEvent: false});
     });
   }
 
+  // calculate total price when value of order cost or shipment cost changes
   calculateTotalPrice() {
-    this.requestForm.valueChanges.pipe(debounceTime(1000), distinctUntilChanged()).subscribe(val => {
-      let cost = 0;
-      if (val.order_shipment_cost > 0 || (val.order_items[0].order_unit_price > 0)) {
-        val.order_items.forEach(item => {
-          cost += item.order_quantity * item.order_unit_price;
-        });
-        cost += val.order_shipment_cost;
-        // Use emitEvent: false option to avoid triggering form valueChanges
-        this.requestForm.get('order_total_cost').setValue(cost, {emitEvent: false});
-      }
+    this.requestForm.get('order_items').valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(val => this.totalPrice());
+    this.requestForm.get('order_shipment_cost').valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(val => this.totalPrice());
+  }
+  totalPrice() {
+    let cost = 0;
+    this.requestForm.get('order_items').value.forEach(item => {
+      cost += item.order_quantity * item.order_unit_price;
     });
+    cost += this.requestForm.get('order_shipment_cost').value;
+    // Use emitEvent: false option to avoid triggering form valueChanges
+    this.requestForm.get('order_total_cost').setValue(cost, {emitEvent: false});
   }
 
   // form on submit
