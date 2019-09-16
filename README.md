@@ -1,6 +1,6 @@
-This project was designed for Carnegie System Access Request Approval Process.
+This project was designed for Carnegie Gas Cylinder Ordering Process.
 
-The backend endpoint is configured in PHP and data saved in MySQL.
+The backend endpoint is provided in Node and data saved in MongoDB.
 
 
 
