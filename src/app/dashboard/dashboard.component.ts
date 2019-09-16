@@ -10,6 +10,7 @@ import {Sort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
 import {cookie_settings} from "../cookie_settings";
 import {RequestDetailComponent} from "./request-detail/request-detail.component";
+import {RequestManagerNoteComponent} from "./request-manager-note/request-manager-note.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -49,7 +50,7 @@ export class DashboardComponent implements OnInit {
       // status response configured in php app
       console.log(response);
       // if succeed, then update request list view
-      if (response.status == "succeed") {
+      if (response.status == 200) {
         this.changeStatus(this.dashboardStatus);
         // set up snackBar pop up
         if ('approved' === value) {
@@ -67,10 +68,6 @@ export class DashboardComponent implements OnInit {
         }
       } else alert("Operation failed on database, please try again.");
     });
-  }
-
-  approveRequest(request: Request) {
-    this.updateRequest(request, 'approved');
   }
 
   declineRequest(request: Request) {
@@ -112,7 +109,7 @@ export class DashboardComponent implements OnInit {
               case 'order_requester':
                 return compare(a.order_requester, b.order_requester, isAsc);
               case 'order_vendor':
-                return compare(a.order_vendor, b.order_vendor, isAsc);
+                return compare(a.order_vendor.order_vendor_name, b.order_vendor.order_vendor_name, isAsc);
               case 'order_manager_note':
                 return compare(a.order_manager_note, b.order_manager_note, isAsc);
               default:
@@ -130,15 +127,25 @@ export class DashboardComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25];
 
   // Mat dialog for view request detail
-  openDialog(request: any): void {
+  openDialog(request: Request): void {
     const dialogRef = this.dialog.open(RequestDetailComponent, {
       width: '1000px',
       data: request
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
+    });
+  }
+
+  approveRequest(request: Request): void {
+    const dialogRefNote = this.dialog.open(RequestManagerNoteComponent, {
+      width: '1000px',
+      data: request
+    });
+    dialogRefNote.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
       if (result) {
-        this.updateRequest(result, 'note');
+        this.updateRequest(result, 'approved');
       }
     });
   }

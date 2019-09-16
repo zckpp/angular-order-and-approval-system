@@ -1,110 +1,128 @@
-<div class="container">
-  <h1>Gas Cylinder Order Form</h1>
-</div>
+<h1>Gas Cylinder Order Form</h1>
 <br>
-<mat-card class="container">
+<mat-card>
   <form [formGroup]="requestForm" (ngSubmit)="onSubmit()">
-    <h3>Requester Info</h3>
-    <div class="row">
-      <mat-form-field class="col-md-6 col-sm-12">
-        <input matInput placeholder="Requested By" formControlName="order_requester" required>
-      </mat-form-field>
-
-      <mat-form-field class="col-md-6 col-sm-12">
-        <input matInput placeholder="Supervisor" aria-label="Manager" formControlName="order_manager"
-               [matAutocomplete]="auto"
-               required>
-        <mat-autocomplete #auto="matAutocomplete">
-          <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
-            {{ option.name }}
-          </mat-option>
-        </mat-autocomplete>
-        <mat-hint>Please type in your manager's name and select from the Autocomplete list.</mat-hint>
-        <mat-error
-          *ngIf="requestForm.get('order_manager').dirty && requestForm.get('order_manager').hasError('notInList')">
-          Please choose a manager from the list.
-        </mat-error>
-      </mat-form-field>
-    </div>
-
-    <div class="row">
-      <mat-form-field class="col-md-6 col-sm-12">
-        <input matInput placeholder="Phone Number" formControlName="order_requester_phone" required>
-      </mat-form-field>
-    </div>
-
-    <br>
-    <h3>Vendor Info</h3>
-    <small>Choose a vendor name the rest of vendor information will be automatically populate.</small><br>
-    <div formGroupName="order_vendor">
+    <div class="field-group">
+      <h3>Requester Info</h3>
       <div class="row">
-        <mat-form-field class="col-md-4 col-sm-12">
-          <mat-label>Vendor Name</mat-label>
-          <mat-select formControlName="order_vendor_name" required>
-            <mat-option *ngFor="let vendor of vendors$ | async" value="{{ vendor.vendor_name }}">
-              {{ vendor.vendor_name }}
+        <mat-form-field class="col-md-6 col-sm-12">
+          <input matInput placeholder="Requested By" formControlName="order_requester" required>
+        </mat-form-field>
+
+        <mat-form-field class="col-md-6 col-sm-12">
+          <input matInput placeholder="Supervisor" aria-label="Manager" formControlName="order_manager"
+                 [matAutocomplete]="auto"
+                 required>
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option.name">
+              {{ option.name }}
             </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="col-md-8 col-sm-12">
-          <input matInput placeholder="Vendor Address" formControlName="order_vendor_address" readonly="readonly">
+          </mat-autocomplete>
+          <mat-hint>Please type in your manager's name and select from the Autocomplete list.</mat-hint>
+          <mat-error
+            *ngIf="requestForm.get('order_manager').dirty && requestForm.get('order_manager').hasError('notInList')">
+            Please choose a manager from the list.
+          </mat-error>
         </mat-form-field>
       </div>
 
       <div class="row">
         <mat-form-field class="col-md-6 col-sm-12">
-          <input matInput placeholder="Vendor Phone Number" formControlName="order_vendor_phone" readonly="readonly">
-        </mat-form-field>
-        <mat-form-field class="col-md-6 col-sm-12">
-          <input matInput placeholder="Vendor Fax Number" formControlName="order_vendor_fax" readonly="readonly">
+          <input matInput placeholder="Phone Number" formControlName="order_requester_phone" required>
         </mat-form-field>
       </div>
     </div>
+    <mat-divider></mat-divider>
 
-    <br><br>
-    <h3>Order Info</h3>
-    <div formArrayName="order_items" *ngFor="let item of requestForm.get('order_items').controls; let i = index;">
-      <div [formGroupName]="i">
+    <div class="field-group">
+      <br>
+      <h3>Vendor Info</h3>
+      <small>Choose a vendor name the rest of vendor information will be automatically populate.</small><br><br>
+      <div formGroupName="order_vendor">
         <div class="row">
           <mat-form-field class="col-md-4 col-sm-12">
-            <input matInput placeholder="Cat#" formControlName="order_name" required>
+            <mat-label>Vendor Name</mat-label>
+            <mat-select formControlName="order_vendor_name" required>
+              <mat-option *ngFor="let vendor of vendors$ | async" value="{{ vendor.vendor_name }}">
+                {{ vendor.vendor_name }}
+              </mat-option>
+            </mat-select>
           </mat-form-field>
-          <mat-form-field class="col-md-4 col-sm-12">
-            <input matInput placeholder="Quantity" formControlName="order_quantity" required type="number" min="0.00"
-                   step="1">
-          </mat-form-field>
-          <mat-form-field class="col-md-4 col-sm-12">
-            <span matPrefix>$ &nbsp;</span>
-            <input matInput placeholder="Unit Price" formControlName="order_unit_price" required type="number"
-                   min="0.00" step="0.01">
+          <mat-form-field class="col-md-8 col-sm-12">
+            <input matInput placeholder="Vendor Address" formControlName="order_vendor_address" readonly="readonly">
           </mat-form-field>
         </div>
+
         <div class="row">
           <mat-form-field class="col-md-6 col-sm-12">
-            <input matInput placeholder="Description" formControlName="order_description">
+            <input matInput placeholder="Vendor Phone Number" formControlName="order_vendor_phone" readonly="readonly">
+          </mat-form-field>
+          <mat-form-field class="col-md-6 col-sm-12">
+            <input matInput placeholder="Vendor Fax Number" formControlName="order_vendor_fax" readonly="readonly">
           </mat-form-field>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-6 col-sm-12">
-        <button mat-raised-button type="button" (click)="this.addItem()">Add a New Order</button>
+    <mat-divider></mat-divider>
+
+    <div class="field-group">
+      <br>
+      <h3>Order Info</h3>
+      <div formArrayName="order_items" *ngFor="let item of requestForm.get('order_items').controls; let i = index;">
+        <div [formGroupName]="i">
+          <div class="row">
+            <mat-form-field class="col-md-4 col-sm-12">
+              <input matInput placeholder="Cat#" formControlName="order_name" required>
+            </mat-form-field>
+            <mat-form-field class="col-md-4 col-sm-12">
+              <input matInput placeholder="Quantity" formControlName="order_quantity" required type="number" min="0.00"
+                     step="1">
+            </mat-form-field>
+            <mat-form-field class="col-md-4 col-sm-12">
+              <span matPrefix>$ &nbsp;</span>
+              <input matInput placeholder="Unit Price" formControlName="order_unit_price" required type="number"
+                     min="0.00" step="0.01">
+            </mat-form-field>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-6 col-sm-12">
+              <input matInput placeholder="Description" formControlName="order_description">
+            </mat-form-field>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 col-sm-12">
+          <button mat-raised-button type="button" (click)="this.addItem()">Add a New Order</button>
+        </div>
+      </div>
+      <br><br>
+      <div class="row">
+        <mat-form-field class="col-md-6 col-sm-12">
+          <span matPrefix>$ &nbsp;</span>
+          <input matInput placeholder="Shipment Cost" formControlName="order_shipment_cost" type="number" min="0.00"
+                 step="0.01">
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-sm-12">
+          <input matInput placeholder="Total Cost (auto-calculated)" formControlName="order_total_cost"
+                 readonly="readonly" [value]="requestForm.get('order_total_cost').value | currency">
+        </mat-form-field>
+      </div>
+      <input type="hidden" formControlName="status">
+
+      <div class="row">
+        <div class="col-md-12">
+          <ngb-alert *ngIf="succeed === true" type="success" [dismissible]="false">Your request is submitted successfully. This
+            page will refresh in 3 seconds.
+          </ngb-alert>
+          <ngb-alert *ngIf="succeed === false" type="danger" [dismissible]="false">There was something wrong in the system.
+            Please try again or contact admin.
+          </ngb-alert>
+          <br>
+          <button type="submit" mat-raised-button [disabled]="!requestForm.valid">Submit</button>
+        </div>
       </div>
     </div>
-    <br><br>
-    <div class="row">
-      <mat-form-field class="col-md-6 col-sm-12">
-        <span matPrefix>$ &nbsp;</span>
-        <input matInput placeholder="Shipment Cost" formControlName="order_shipment_cost" type="number" min="0.00"
-               step="0.01">
-      </mat-form-field>
-      <mat-form-field class="col-md-6 col-sm-12">
-        <input matInput placeholder="Total Cost (auto-calculated)" formControlName="order_total_cost"
-               readonly="readonly" [value]="requestForm.get('order_total_cost').value | currency">
-      </mat-form-field>
-    </div>
-    <input type="hidden" formControlName="status">
-    <br><br>
     <!--    <h3>Accounting Info</h3>-->
     <!--    <div class="row">-->
     <!--      <mat-form-field class="col-md-4 col-sm-12">-->
@@ -120,20 +138,6 @@
     <!--        <textarea matInput placeholder="Account(s) To Be Charged" formControlName="order_accounts"></textarea>-->
     <!--      </mat-form-field>-->
     <!--    </div>-->
-    <div class="row">
-      <div class="col-md-12">
-        <br>
-        <button type="submit" mat-raised-button [disabled]="!requestForm.valid">Submit</button>
-      </div>
-    </div>
   </form>
-
-  <br><br>
-  <ngb-alert *ngIf="succeed === true" type="success" [dismissible]="false">Your request is submitted successfully. This
-    page will refresh in 3 seconds.
-  </ngb-alert>
-  <ngb-alert *ngIf="succeed === false" type="danger" [dismissible]="false">There was something wrong in the system.
-    Please try again or contact admin.
-  </ngb-alert>
 </mat-card>
 

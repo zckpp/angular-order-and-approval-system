@@ -34,6 +34,10 @@ export class ApiService {
     return this.httpClient.post<Object>(this.API_SERVER, request);
   }
 
+  updateRequest(request: Request) {
+    return this.httpClient.put<Request>(`${this.API_SERVER}/${request._id}`, request);
+  }
+
   searchRequests(term: string): Observable<Request[]> {
     return this.httpClient.post<Request[]>(`${this.API_SERVER}/read.php`, term).pipe(
       // sort by granted date
@@ -43,10 +47,6 @@ export class ApiService {
         });
       })
     );
-  }
-
-  updateRequest(request: Request) {
-    return this.httpClient.put<Request>(`${this.API_SERVER}/update.php`, request);
   }
 
   deleteRequest(id: number) {

@@ -1,19 +1,24 @@
 <ul class="nav nav-pills">
   <li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('pending')" [class.active]="dashboardStatus == 'pending'">Pending</a>
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('pending')"
+       [class.active]="dashboardStatus == 'pending'">Pending</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('approved')" [class.active]="dashboardStatus == 'approved'">Approved</a>
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('approved')"
+       [class.active]="dashboardStatus == 'approved'">Approved</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('declined')" [class.active]="dashboardStatus == 'declined'">Declined</a>
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('declined')"
+       [class.active]="dashboardStatus == 'declined'">Declined</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('complete')" [class.active]="dashboardStatus == 'complete'">Complete</a>
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('complete')"
+       [class.active]="dashboardStatus == 'complete'">Complete</a>
   </li>
 </ul>
 <br>
 <table width='100%' class="table table-striped" matSort (matSortChange)="sortData.emit($event)">
+  <thead>
   <tr>
     <th mat-sort-header="createdAt">Created Date</th>
     <th mat-sort-header="order_requester">Requester</th>
@@ -22,7 +27,9 @@
     <th>Request Detail</th>
     <th *ngIf="dashboardStatus === 'pending'">Response</th>
   </tr>
+  </thead>
 
+  <tbody>
   <tr *ngFor="let request of requests | async | slice:(pageSize*pageIndex):(pageSize*pageIndex+pageSize)">
     <td>{{ request.createdAt | date:'medium' }}</td>
     <td>{{ request.order_requester }}</td>
@@ -32,9 +39,10 @@
       <button mat-raised-button (click)="viewDetail.emit(request)">View Detail</button>
     </td>
     <td *ngIf="dashboardStatus === 'pending'">
-      <button class="btn btn-success" (click)="requestApproved.emit(request)">Approve</button>
+      <button mat-raised-button class="btn btn-success" (click)="requestApproved.emit(request)">Approve</button>
       &nbsp;
-      <button class="btn btn-danger"(click)="requestDeclined.emit(request)">Decline</button>
+      <button mat-raised-button class="btn btn-danger" (click)="requestDeclined.emit(request)">Decline</button>
     </td>
   </tr>
+  </tbody>
 </table>

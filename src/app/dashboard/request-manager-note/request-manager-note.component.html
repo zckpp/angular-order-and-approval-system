@@ -67,17 +67,15 @@
   </div>
 
   <div class="row">
-    <div class="col-md-12">
-      <br>
-      <h4 *ngIf="data.order_manager_note !== undefined">Manager Note</h4>
-      <p>
-        {{ data.order_manager_note }}
-      </p>
-    </div>
+    <mat-form-field class="col-md-12">
+      <p>*Please fill in the accounts to be charged.</p>
+      <textarea matInput [(ngModel)]="data.order_manager_note" rows="6"></textarea>
+    </mat-form-field>
   </div>
 </div>
 
 <div mat-dialog-actions>
   <br>
   <button mat-button (click)="onNoClick()">Close</button>
+  <button [mat-dialog-close]="data" class="btn btn-success">Save Note and Approve</button>
 </div>

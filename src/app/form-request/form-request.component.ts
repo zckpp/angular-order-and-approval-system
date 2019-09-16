@@ -76,7 +76,7 @@ export class FormRequestComponent implements OnInit {
   }
 
   // methods
-  // auto-complete field method
+  // manager field auto-complete method
   private _filter(name: string): Manager[] {
     const filterValue = name.toLowerCase();
     return this.managers.filter(option => option.name.toLowerCase().indexOf(filterValue) !== -1);
@@ -91,7 +91,6 @@ export class FormRequestComponent implements OnInit {
       order_description: ''
     });
   }
-
   addItem(): void {
     this.items = this.requestForm.get('order_items') as FormArray;
     this.items.push(this.createItem());
