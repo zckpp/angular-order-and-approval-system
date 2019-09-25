@@ -6,9 +6,10 @@ $carnegie-light-blue: #5eb6cd;
 $carnegie-brown: #c49a6c;
 $carnegie-green: #96ca4f;
 $red: #e45832;
+$background-grey: #f9f9f9;
 
 html, body {
-  background-color: #f9f9f9;
+  background-color: $background-grey;
   height: 100%;
 }
 body {
@@ -16,6 +17,9 @@ body {
   font-family: "Helvetica Neue", sans-serif;
   a {
     color: $carnegie-light-blue;
+    &:hover {
+      color: $carnegie-dark-blue;
+    }
   }
   h1 {
     text-align: center;

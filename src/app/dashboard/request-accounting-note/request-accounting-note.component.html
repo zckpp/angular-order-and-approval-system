@@ -73,15 +73,41 @@
   </div>
 
   <div class="row">
-    <mat-form-field class="col-md-12">
-      <p>*Please fill in the accounts to be charged.</p>
-      <textarea matInput [(ngModel)]="data.manager_note" rows="6"></textarea>
+    <div class="col-md-12">
+      <br>
+      <div *ngIf="data.manager_note !== undefined">
+        <h4>Manager Note</h4>
+        <mat-divider></mat-divider>
+        <br>
+      </div>
+      <p>
+        <strong>{{ data.manager_note }}</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <br>
+      <h4>Accounting Info</h4>
+      <mat-divider></mat-divider>
+      <br>
+      <p>*Please fill in the accounting information</p>
+    </div>
+    <mat-form-field class="col-md-4 col-sm-12">
+      <input matInput placeholder="Authorized By" [(ngModel)]="data.authorized" required>
+    </mat-form-field>
+    <mat-form-field class="col-md-4 col-sm-12">
+      <input matInput placeholder="PO Number" [(ngModel)]="data.po" required>
+    </mat-form-field>
+    <mat-form-field class="col-md-4 col-sm-12">
+      <input matInput placeholder="Pay terms" [(ngModel)]="data.pay_terms" required>
     </mat-form-field>
   </div>
 </div>
 
 <div mat-dialog-actions>
   <br>
-  <button [mat-dialog-close]="data" class="btn btn-success">Save Note and Approve</button>
+  <button [mat-dialog-close]="data" class="btn btn-success">Save Note and Complete</button>
   <button mat-button (click)="onNoClick()">Close</button>
 </div>

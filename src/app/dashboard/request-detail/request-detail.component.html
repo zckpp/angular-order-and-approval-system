@@ -2,40 +2,46 @@
   <div class="row">
     <div class="col-md-6">
       <h4>Requester Info</h4>
+      <mat-divider></mat-divider>
+      <br>
       <div class="row">
         <div class="col-md-4">Requested by:</div>
-        <div class="col-md-8"><strong>{{ data.order_requester }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.requester }}</strong></div>
       </div>
       <div class="row">
         <div class="col-md-4">Phone number:</div>
-        <div class="col-md-8"><strong>{{ data.order_requester_phone }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.requester_phone }}</strong></div>
       </div>
       <div class="row">
         <div class="col-md-4">Supervisor:</div>
-        <div class="col-md-8"><strong>{{ data.order_manager }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.manager }}</strong></div>
       </div>
       <br>
       <h4>Vendor Info</h4>
+      <mat-divider></mat-divider>
+      <br>
       <div class="row">
         <div class="col-md-4">Vendor Name:</div>
-        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_name }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.vendor.vendor_name }}</strong></div>
       </div>
       <div class="row">
         <div class="col-md-4">Address:</div>
-        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_address }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.vendor.vendor_address }}</strong></div>
       </div>
       <div class="row">
         <div class="col-md-4">Phone Number:</div>
-        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_phone }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.vendor.vendor_phone }}</strong></div>
       </div>
       <div class="row">
         <div class="col-md-4">Fax:</div>
-        <div class="col-md-8"><strong>{{ data.order_vendor.order_vendor_fax }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.vendor.vendor_fax }}</strong></div>
       </div>
     </div>
 
     <div class="col-md-6">
       <h4>Order Info</h4>
+      <mat-divider></mat-divider>
+      <br>
       <div *ngFor="let order of data.order_items">
         <div class="row">
           <div class="col-md-4">Cat#:</div>
@@ -57,11 +63,11 @@
       </div>
       <div class="row">
         <div class="col-md-4">Shipment Cost:</div>
-        <div class="col-md-8"><strong>{{ data.order_shipment_cost | currency }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.shipment_cost | currency }}</strong></div>
       </div>
       <div class="row">
         <div class="col-md-4">Total Cost:</div>
-        <div class="col-md-8"><strong>{{ data.order_total_cost | currency }}</strong></div>
+        <div class="col-md-8"><strong>{{ data.total_cost | currency }}</strong></div>
       </div>
     </div>
   </div>
@@ -69,10 +75,37 @@
   <div class="row">
     <div class="col-md-12">
       <br>
-      <h4 *ngIf="data.order_manager_note !== undefined">Manager Note</h4>
+      <div *ngIf="data.manager_note !== undefined">
+        <h4>Manager Note</h4>
+        <mat-divider></mat-divider>
+        <br>
+      </div>
       <p>
-        {{ data.order_manager_note }}
+        <strong>{{ data.manager_note }}</strong>
       </p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-12">
+      <br>
+      <div *ngIf="data.po !== ''">
+        <h4>Accounting Info</h4>
+        <mat-divider></mat-divider>
+        <br>
+        <div class="row">
+          <div class="col-md-4">Authorized By:</div>
+          <div class="col-md-8"><strong>{{ data.authorized }}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">PO Number:</div>
+          <div class="col-md-8"><strong>{{ data.po }}</strong></div>
+        </div>
+        <div class="row">
+          <div class="col-md-4">Pay Terms:</div>
+          <div class="col-md-8"><strong>{{ data.pay_terms }}</strong></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

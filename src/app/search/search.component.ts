@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 
 import { ApiService } from '../api.service';
 import { Request } from '../request';
-import { cookie_settings } from "../cookie_settings";
+import { cookie_settings } from "../app_settings";
 import { PageEvent } from '@angular/material/paginator';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from "rxjs";
@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-      this.auth = this.cookieService.get(cookie_settings.auth);
+      this.auth = this.cookieService.get(cookie_settings.name);
       this.user_email = this.cookieService.get('email_cookie');
       // use switchMap to combine two observables
       this.requests$ = this.termFilter.valueChanges

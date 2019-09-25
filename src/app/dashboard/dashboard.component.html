@@ -1,26 +1,31 @@
-<h1>Order Approval Dashboard</h1>
+<h1 *ngIf="auth.role === role.manager">Gas Cylinder Order Approval Dashboard</h1>
+<h1 *ngIf="auth.role === role.accounting">Gas Cylinder Order Accounting Dashboard</h1>
 <br>
 <mat-card>
-  <h2 *ngIf="auth === null">Please log into <a href="https://mycarnegie.carnegiescience.edu">myCarnegie</a> first</h2>
-  <h3 *ngIf="auth === null">Your email is: {{ user_email }}</h3>
+  <h2 *ngIf="auth.role === 'invalid'">Please log into <a href="https://mycarnegie.carnegiescience.edu">myCarnegie</a>
+    first.</h2>
 
   <br>
   <!--display requests if authed-->
-  <app-request-list *ngIf="auth !== null"
-                    [requests]="requests$"
-                    [dashboardStatus]="dashboardStatus"
-                    [pageSize]="pageEvent?pageEvent.pageSize:this.pageSize"
-                    [pageIndex]="pageEvent?pageEvent.pageIndex:0"
-                    (requestApproved)="approveRequest($event)"
-                    (requestDeclined)="declineRequest($event)"
-                    (statusChange)="changeStatus($event)"
-                    (sortData)="sortDataControl($event)"
-                    (viewDetail)="openDialog($event)"
-  >
-  </app-request-list>
-  <mat-paginator [length]="(requests$ | async)?.length"
-                 [pageSize]="pageSize"
-                 [pageSizeOptions]="pageSizeOptions"
-                 (page)="pageEvent = $event">
-  </mat-paginator>
+  <div *ngIf="auth.role !== 'invalid'">
+    <app-request-list
+      [requests]="requests$"
+      [dashboardStatus]="dashboardStatus"
+      [pageSize]="pageEvent?pageEvent.pageSize:this.pageSize"
+      [pageIndex]="pageEvent?pageEvent.pageIndex:0"
+      [authRole]="auth.role"
+      (requestApproved)="approveRequest($event)"
+      (requestDeclined)="declineRequest($event)"
+      (requestComplete)="completeRequest($event)"
+      (statusChange)="changeStatus($event)"
+      (sortData)="sortDataControl($event)"
+      (viewDetail)="openDialog($event)"
+    >
+    </app-request-list>
+    <mat-paginator [length]="(requests$ | async)?.length"
+                   [pageSize]="pageSize"
+                   [pageSizeOptions]="pageSizeOptions"
+                   (page)="pageEvent = $event">
+    </mat-paginator>
+  </div>
 </mat-card>

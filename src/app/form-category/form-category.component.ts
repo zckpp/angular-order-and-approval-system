@@ -30,22 +30,22 @@ export class FormCategoryComponent implements OnInit {
     categories_list$: Observable<CategoryGroup[]>;
 
     ngOnInit() {
-        this.categoryGroups$ = this.apiService.readCategories();
-        this.categories_list$ = this.categoryForm.get('system').valueChanges
-            .pipe(
-                //start with empty string to show all result
-                startWith<string>(""),
-                distinctUntilChanged(),
-                switchMap(term => this.apiService.readCategories()
-                    .pipe(
-                        map(
-                            (categorieGroups) => {
-                              return categorieGroups.filter((categorieGroup) => { return categorieGroup.name.includes(term); });
-                            }
-                        ),
-                    )
-                ),
-            );
+        // this.categoryGroups$ = this.apiService.readCategories();
+        // this.categories_list$ = this.categoryForm.get('system').valueChanges
+        //     .pipe(
+        //         //start with empty string to show all result
+        //         startWith<string>(""),
+        //         distinctUntilChanged(),
+        //         switchMap(term => this.apiService.readCategories()
+        //             .pipe(
+        //                 map(
+        //                     (categorieGroups) => {
+        //                       return categorieGroups.filter((categorieGroup) => { return categorieGroup.name.includes(term); });
+        //                     }
+        //                 ),
+        //             )
+        //         ),
+        //     );
     }
 
     // validating Category field for duplications

@@ -6,11 +6,11 @@
       <h3>Requester Info</h3>
       <div class="row">
         <mat-form-field class="col-md-6 col-sm-12">
-          <input matInput placeholder="Requested By" formControlName="order_requester" required>
+          <input matInput placeholder="Requested By" formControlName="requester" required>
         </mat-form-field>
 
         <mat-form-field class="col-md-6 col-sm-12">
-          <input matInput placeholder="Supervisor" aria-label="Manager" formControlName="order_manager"
+          <input matInput placeholder="Supervisor" aria-label="Manager" formControlName="manager"
                  [matAutocomplete]="auto"
                  required>
           <mat-autocomplete #auto="matAutocomplete">
@@ -20,7 +20,7 @@
           </mat-autocomplete>
           <mat-hint>Please type in your manager's name and select from the Autocomplete list.</mat-hint>
           <mat-error
-            *ngIf="requestForm.get('order_manager').dirty && requestForm.get('order_manager').hasError('notInList')">
+            *ngIf="requestForm.get('manager').dirty && requestForm.get('manager').hasError('notInList')">
             Please choose a manager from the list.
           </mat-error>
         </mat-form-field>
@@ -28,7 +28,7 @@
 
       <div class="row">
         <mat-form-field class="col-md-6 col-sm-12">
-          <input matInput placeholder="Phone Number" formControlName="order_requester_phone" required>
+          <input matInput placeholder="Phone Number" formControlName="requester_phone" required>
         </mat-form-field>
       </div>
     </div>
@@ -38,27 +38,27 @@
       <br>
       <h3>Vendor Info</h3>
       <small>Choose a vendor name the rest of vendor information will be automatically populate.</small><br><br>
-      <div formGroupName="order_vendor">
+      <div formGroupName="vendor">
         <div class="row">
           <mat-form-field class="col-md-4 col-sm-12">
             <mat-label>Vendor Name</mat-label>
-            <mat-select formControlName="order_vendor_name" required>
+            <mat-select formControlName="vendor_name" required>
               <mat-option *ngFor="let vendor of vendors$ | async" value="{{ vendor.vendor_name }}">
                 {{ vendor.vendor_name }}
               </mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="col-md-8 col-sm-12">
-            <input matInput placeholder="Vendor Address" formControlName="order_vendor_address" readonly="readonly">
+            <input matInput placeholder="Vendor Address" formControlName="vendor_address" readonly="readonly">
           </mat-form-field>
         </div>
 
         <div class="row">
           <mat-form-field class="col-md-6 col-sm-12">
-            <input matInput placeholder="Vendor Phone Number" formControlName="order_vendor_phone" readonly="readonly">
+            <input matInput placeholder="Vendor Phone Number" formControlName="vendor_phone" readonly="readonly">
           </mat-form-field>
           <mat-form-field class="col-md-6 col-sm-12">
-            <input matInput placeholder="Vendor Fax Number" formControlName="order_vendor_fax" readonly="readonly">
+            <input matInput placeholder="Vendor Fax Number" formControlName="vendor_fax" readonly="readonly">
           </mat-form-field>
         </div>
       </div>
@@ -100,12 +100,12 @@
       <div class="row">
         <mat-form-field class="col-md-6 col-sm-12">
           <span matPrefix>$ &nbsp;</span>
-          <input matInput placeholder="Shipment Cost" formControlName="order_shipment_cost" type="number" min="0.00"
+          <input matInput placeholder="Shipment Cost" formControlName="shipment_cost" type="number" min="0.00"
                  step="0.01">
         </mat-form-field>
         <mat-form-field class="col-md-6 col-sm-12">
-          <input matInput placeholder="Total Cost (auto-calculated)" formControlName="order_total_cost"
-                 readonly="readonly" [value]="requestForm.get('order_total_cost').value | currency">
+          <input matInput placeholder="Total Cost (auto-calculated)" formControlName="total_cost"
+                 readonly="readonly" [value]="requestForm.get('total_cost').value | currency">
         </mat-form-field>
       </div>
       <input type="hidden" formControlName="status">
@@ -123,21 +123,6 @@
         </div>
       </div>
     </div>
-    <!--    <h3>Accounting Info</h3>-->
-    <!--    <div class="row">-->
-    <!--      <mat-form-field class="col-md-4 col-sm-12">-->
-    <!--        <input matInput placeholder="Authorized By" formControlName="order_authorized" required>-->
-    <!--      </mat-form-field>-->
-    <!--      <mat-form-field class="col-md-4 col-sm-12">-->
-    <!--        <input matInput placeholder="PO Number" formControlName="order_po" required>-->
-    <!--      </mat-form-field>-->
-    <!--      <mat-form-field class="col-md-4 col-sm-12">-->
-    <!--        <input matInput placeholder="Payment Terms" formControlName="order_payment_terms" required>-->
-    <!--      </mat-form-field>-->
-    <!--      <mat-form-field class="col-md-6 col-sm-12">-->
-    <!--        <textarea matInput placeholder="Account(s) To Be Charged" formControlName="order_accounts"></textarea>-->
-    <!--      </mat-form-field>-->
-    <!--    </div>-->
   </form>
 </mat-card>
 

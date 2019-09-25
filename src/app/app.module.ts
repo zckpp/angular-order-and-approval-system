@@ -23,13 +23,12 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSortModule} from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
-import {DashboardGrantComponent} from './dashboard-grant/dashboard-grant.component';
-import {RequestListGrantComponent} from './dashboard-grant/request-list-grant/request-list-grant.component';
 import {SearchComponent} from './search/search.component';
 import {RequestListSearchComponent} from './search/request-list-search/request-list-search.component';
 import {FormCategoryComponent} from './form-category/form-category.component';
 import {RequestDetailComponent} from './dashboard/request-detail/request-detail.component';
 import {RequestManagerNoteComponent} from './dashboard/request-manager-note/request-manager-note.component';
+import { RequestAccountingNoteComponent } from './dashboard/request-accounting-note/request-accounting-note.component';
 
 @NgModule({
   declarations: [
@@ -37,13 +36,12 @@ import {RequestManagerNoteComponent} from './dashboard/request-manager-note/requ
     DashboardComponent,
     RequestListComponent,
     FormRequestComponent,
-    DashboardGrantComponent,
-    RequestListGrantComponent,
     SearchComponent,
     RequestListSearchComponent,
     FormCategoryComponent,
     RequestDetailComponent,
     RequestManagerNoteComponent,
+    RequestAccountingNoteComponent,
   ],
   imports: [
     BrowserModule,
@@ -70,8 +68,8 @@ import {RequestManagerNoteComponent} from './dashboard/request-manager-note/requ
   bootstrap: [AppComponent],
   entryComponents: [
     RequestDetailComponent,
-    RequestManagerNoteComponent
+    RequestManagerNoteComponent,
+    RequestAccountingNoteComponent
   ]
 })
-export class AppModule {
-}
+export class AppModule {}

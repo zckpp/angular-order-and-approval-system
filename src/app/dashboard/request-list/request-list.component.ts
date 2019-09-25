@@ -1,4 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
+import {role_settings} from "../../app_settings";
 
 @Component({
   selector: 'app-request-list',
@@ -13,14 +14,26 @@ export class RequestListComponent implements OnInit {
   @Input() dashboardStatus;
   @Input() pageSize;
   @Input() pageIndex;
+  @Input() authRole;
   @Output() requestApproved = new EventEmitter<any>();
   @Output() requestDeclined = new EventEmitter<any>();
+  @Output() requestComplete = new EventEmitter<any>();
   @Output() statusChange = new EventEmitter<string>();
   @Output() sortData = new EventEmitter<any>();
   @Output() viewDetail = new EventEmitter<any>();
 
+  role: {
+    manager: string,
+    accounting: string
+  }
+
   constructor() { }
 
   ngOnInit() {
+    // get user roles settings
+    this.role = {
+      manager: role_settings.manager,
+      accounting: role_settings.accounting
+    }
   }
 }

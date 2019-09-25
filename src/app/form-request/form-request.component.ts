@@ -43,26 +43,26 @@ export class FormRequestComponent implements OnInit {
     this.vendors$ = this.apiService.readVendors();
 
     this.requestForm = this.fb.group({
-      order_requester: ['', Validators.required],
-      order_requester_phone: ['', Validators.required],
-      order_vendor: this.fb.group({
-        order_vendor_name: [''],
-        order_vendor_address: [''],
-        order_vendor_phone: [''],
-        order_vendor_fax: ['']
+      requester: ['', Validators.required],
+      requester_phone: ['', Validators.required],
+      vendor: this.fb.group({
+        vendor_name: [''],
+        vendor_address: [''],
+        vendor_phone: [''],
+        vendor_fax: ['']
       }),
-      order_manager: ['', [Validators.required, validateManager]],
-      order_shipment_cost: [''],
-      order_total_cost: [{value: ''}],
-      order_authorized: [''],
-      order_po: [''],
-      order_payment_terms: [''],
-      order_accounts: [''],
+      manager: ['', [Validators.required, validateManager]],
+      shipment_cost: [''],
+      total_cost: [{value: ''}],
+      authorized: [''],
+      po: [''],
+      payment_terms: [''],
+      accounts: [''],
       order_items: this.fb.array([this.createItem()]),
       status: [''],
     });
 
-    this.filteredOptions = this.requestForm.get('order_manager').valueChanges.pipe(
+    this.filteredOptions = this.requestForm.get('manager').valueChanges.pipe(
       startWith<string | Manager>(""),
       debounceTime(500),
       map(value => typeof value === 'string' ? value : value.name),
@@ -72,7 +72,7 @@ export class FormRequestComponent implements OnInit {
     // auto calculate total price, and init total price with 0 otherwise it will show [object object]
     this.calculateTotalPrice();
     this.vendorInfo();
-    this.requestForm.get('order_total_cost').setValue(0, {emitEvent: false});
+    this.requestForm.get('total_cost').setValue(0, {emitEvent: false});
   }
 
   // methods
@@ -92,13 +92,13 @@ export class FormRequestComponent implements OnInit {
     });
   }
   addItem(): void {
-    this.items = this.requestForm.get('order_items') as FormArray;
+    this.items = this.requestForm.get('items') as FormArray;
     this.items.push(this.createItem());
   }
 
   // auto fill vendor info
   vendorInfo() {
-    this.requestForm.get('order_vendor.order_vendor_name').valueChanges.pipe(
+    this.requestForm.get('vendor.vendor_name').valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       switchMap(value => this.vendors$.pipe(
@@ -111,31 +111,32 @@ export class FormRequestComponent implements OnInit {
         )
       )
     ).subscribe(val => {
-      this.requestForm.get('order_vendor.order_vendor_address').setValue(val.vendor_address, {emitEvent: false});
-      this.requestForm.get('order_vendor.order_vendor_phone').setValue(val.vendor_phone, {emitEvent: false});
-      this.requestForm.get('order_vendor.order_vendor_fax').setValue(val.vendor_fax, {emitEvent: false});
+      this.requestForm.get('vendor.vendor_address').setValue(val.vendor_address, {emitEvent: false});
+      this.requestForm.get('vendor.vendor_phone').setValue(val.vendor_phone, {emitEvent: false});
+      this.requestForm.get('vendor.vendor_fax').setValue(val.vendor_fax, {emitEvent: false});
     });
   }
 
   // calculate total price when value of order cost or shipment cost changes
   calculateTotalPrice() {
     this.requestForm.get('order_items').valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(val => this.totalPrice());
-    this.requestForm.get('order_shipment_cost').valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(val => this.totalPrice());
+    this.requestForm.get('shipment_cost').valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe(val => this.totalPrice());
   }
   totalPrice() {
     let cost = 0;
     this.requestForm.get('order_items').value.forEach(item => {
       cost += item.order_quantity * item.order_unit_price;
     });
-    cost += this.requestForm.get('order_shipment_cost').value;
+    cost += this.requestForm.get('shipment_cost').value;
     // Use emitEvent: false option to avoid triggering form valueChanges
-    this.requestForm.get('order_total_cost').setValue(cost, {emitEvent: false});
+    this.requestForm.get('total_cost').setValue(cost, {emitEvent: false});
   }
 
   // form on submit
   onSubmit() {
     let newRequest = this.requestForm.value;
     newRequest.status = 'pending';
+    console.log(newRequest);
     this.apiService.createRequest(newRequest).subscribe((response: any) => {
       // status response configured in php app
       console.log(response.status);
