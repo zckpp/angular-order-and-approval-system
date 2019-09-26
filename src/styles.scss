@@ -76,4 +76,14 @@ body {
   textarea.mat-input-element {
     border: 1px solid lightgray;
   }
+  // pdf saving spinner
+  .pdf-spinner {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    z-index: 9999;
+  }
+  #contentToDownload.spinning {
+    opacity: 0.3;
+  }
 }

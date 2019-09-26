@@ -1,4 +1,4 @@
-<div mat-dialog-content id="contentToDownload">
+<div mat-dialog-content id="contentToDownload" [class.spinning]="spinner">
   <div class="row">
     <div class="col-md-6">
       <h4>Requester Info</h4>
@@ -109,7 +109,7 @@
     </div>
   </div>
 </div>
-
+<mat-spinner class="pdf-spinner" *ngIf="spinner == true"></mat-spinner>
 <div mat-dialog-actions>
   <br>
   <button mat-raised-button (click)="captureScreen()" *ngIf="data.po !== ''">Save as PDF</button>

@@ -23,12 +23,13 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {MatSortModule} from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {SearchComponent} from './search/search.component';
 import {RequestListSearchComponent} from './search/request-list-search/request-list-search.component';
 import {FormCategoryComponent} from './form-category/form-category.component';
 import {RequestDetailComponent} from './dashboard/request-detail/request-detail.component';
 import {RequestManagerNoteComponent} from './dashboard/request-manager-note/request-manager-note.component';
-import { RequestAccountingNoteComponent } from './dashboard/request-accounting-note/request-accounting-note.component';
+import {RequestAccountingNoteComponent} from './dashboard/request-accounting-note/request-accounting-note.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { RequestAccountingNoteComponent } from './dashboard/request-accounting-n
     MatSortModule,
     MatDialogModule,
     MatDividerModule,
+    MatProgressSpinnerModule,
     NgbModule
   ],
   providers: [CookieService],
@@ -72,4 +74,5 @@ import { RequestAccountingNoteComponent } from './dashboard/request-accounting-n
     RequestAccountingNoteComponent
   ]
 })
-export class AppModule {}
+export class AppModule {
+}
