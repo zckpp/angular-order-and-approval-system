@@ -1,5 +1,7 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import {Component, OnInit, Inject} from '@angular/core';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-request-detail',
@@ -10,11 +12,33 @@ export class RequestDetailComponent {
 
   constructor(
     public dialogRef: MatDialogRef<RequestDetailComponent>,
-    @Inject(MAT_DIALOG_DATA) public data) {}
+    @Inject(MAT_DIALOG_DATA) public data) {
+  }
 
   onNoClick(): void {
     this.dialogRef.close();
   }
 
+  public captureScreen():void {
+    const content = document.getElementById('contentToDownload');
+    // set height to show overflow
+    content.style.maxHeight = '3000px';
+    content.style.overflow = 'visible';
+    html2canvas(content).then(canvas => {
+      // Few necessary setting options
+      var imgWidth = 208;
+      var pageHeight = 295;
+      var imgHeight = canvas.height * imgWidth / canvas.width;
+      var heightLeft = imgHeight;
 
+      const contentDataURL = canvas.toDataURL('image/png')
+      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
+      var position = 0;
+      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      pdf.save('order-receipt.pdf'); // Generated PDF
+      // revert height settings
+      content.style.maxHeight = '65vh';
+      content.style.overflow = 'auto';
+    });
+  }
 }

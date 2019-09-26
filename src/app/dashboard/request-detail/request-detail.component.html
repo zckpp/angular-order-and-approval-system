@@ -1,4 +1,4 @@
-<div mat-dialog-content>
+<div mat-dialog-content id="contentToDownload">
   <div class="row">
     <div class="col-md-6">
       <h4>Requester Info</h4>
@@ -112,5 +112,6 @@
 
 <div mat-dialog-actions>
   <br>
+  <button mat-raised-button (click)="captureScreen()" *ngIf="data.po !== ''">Save as PDF</button>
   <button mat-button (click)="onNoClick()">Close</button>
 </div>
