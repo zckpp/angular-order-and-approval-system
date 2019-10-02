@@ -1,5 +1,6 @@
 <h1 *ngIf="auth.role === role.manager">Gas Cylinder Order Approval Dashboard</h1>
 <h1 *ngIf="auth.role === role.accounting">Gas Cylinder Order Accounting Dashboard</h1>
+<h1 *ngIf="auth.role === role.admin">Gas Cylinder Order Admin Dashboard</h1>
 <br>
 <mat-card>
   <h2 *ngIf="auth.role === 'invalid'">Please log into <a href="https://mycarnegie.carnegiescience.edu">myCarnegie</a>
@@ -17,6 +18,7 @@
       (requestApproved)="approveRequest($event)"
       (requestDeclined)="declineRequest($event)"
       (requestComplete)="completeRequest($event)"
+      (addToInventory)="addItems($event)"
       (statusChange)="changeStatus($event)"
       (sortData)="sortDataControl($event)"
       (viewDetail)="openDialog($event)"

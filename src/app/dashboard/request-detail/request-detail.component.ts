@@ -1,6 +1,6 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import * as jspdf from 'jspdf';
+import * as jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
 
 @Component({
@@ -20,7 +20,7 @@ export class RequestDetailComponent {
     this.dialogRef.close();
   }
 
-  public captureScreen():void {
+  public captureScreen(src: string):void {
     const content = document.getElementById('contentToDownload');
     // show spinner
     this.spinner = true;
@@ -28,13 +28,11 @@ export class RequestDetailComponent {
     content.style.maxHeight = '3000px';
     content.style.overflow = 'visible';
     html2canvas(content).then(canvas => {
-      // Few necessary setting options
       const imgWidth = 208;
       const imgHeight = canvas.height * imgWidth / canvas.width;
       const contentDataURL = canvas.toDataURL('image/png')
-      let pdf = new jspdf('p', 'mm', 'a4'); // A4 size page of PDF
-      const position = 0;
-      pdf.addImage(contentDataURL, 'PNG', 0, position, imgWidth, imgHeight)
+      let pdf = new jsPDF('p', 'mm', 'a4'); // A4 size page of PDF
+      pdf.addImage(contentDataURL, 'PNG', 0, 0, imgWidth, imgHeight);
       pdf.save('order-receipt.pdf'); // Generated PDF
       // hide spinner
       this.spinner = false;

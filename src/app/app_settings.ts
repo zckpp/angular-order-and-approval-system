@@ -5,5 +5,6 @@ export const cookie_settings = {
 
 export const role_settings = {
   manager: 'Manager',
-  accounting: 'Accounting'
+  accounting: 'Accounting',
+  admin: 'Admin',
 }

@@ -24,6 +24,8 @@ import {MatSortModule} from '@angular/material/sort';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatIconModule} from '@angular/material/icon';
 import {SearchComponent} from './search/search.component';
 import {RequestListSearchComponent} from './search/request-list-search/request-list-search.component';
 import {FormCategoryComponent} from './form-category/form-category.component';
@@ -64,6 +66,8 @@ import {RequestAccountingNoteComponent} from './dashboard/request-accounting-not
     MatDialogModule,
     MatDividerModule,
     MatProgressSpinnerModule,
+    MatSidenavModule,
+    MatIconModule,
     NgbModule
   ],
   providers: [CookieService],

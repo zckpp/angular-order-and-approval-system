@@ -22,7 +22,7 @@ export function validateManager(input: FormControl) {
 export class FormRequestComponent implements OnInit {
 
   requestForm: FormGroup;
-  items: FormArray;
+  order_items: FormArray;
 
   constructor(
     private fb: FormBuilder,
@@ -92,8 +92,8 @@ export class FormRequestComponent implements OnInit {
     });
   }
   addItem(): void {
-    this.items = this.requestForm.get('items') as FormArray;
-    this.items.push(this.createItem());
+    this.order_items = this.requestForm.get('order_items') as FormArray;
+    this.order_items.push(this.createItem());
   }
 
   // auto fill vendor info

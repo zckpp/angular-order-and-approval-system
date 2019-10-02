@@ -1,1 +1,27 @@
-<router-outlet></router-outlet>
+<mat-sidenav-container>
+  <img class="logo" src="../assets/image/site-logo-color.png"/>
+  <mat-sidenav #sidenav mode="side" [(opened)]="sideOpen">
+    <a href="/form">
+      <mat-icon>assignment</mat-icon>
+      Order Form
+    </a>
+    <a href="/dashboard">
+      <mat-icon>account_box</mat-icon>
+      Admin Dashboard
+    </a>
+    <a href="/dashboard">
+      <mat-icon>dashboard</mat-icon>
+      Inventory Dashboard
+    </a>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!--Only show sidebar menu options for admin-->
+    <button mat-icon-button class="large sideBarMenu" (click)="sidenav.toggle()" *ngIf="auth_role === role.admin">
+      <mat-icon *ngIf="sideOpen">close</mat-icon>
+      <mat-icon *ngIf="!sideOpen">menu</mat-icon>
+    </button>
+    <div class="container main-wrapper">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

@@ -1,5 +1,5 @@
 <ul class="nav nav-pills">
-  <li class="nav-item" *ngIf="authRole === role.manager">
+  <li class="nav-item" *ngIf="authRole === role.manager || authRole === role.admin">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('pending')"
        [class.active]="dashboardStatus == 'pending'">Pending</a>
   </li>
@@ -7,13 +7,17 @@
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('approved')"
        [class.active]="dashboardStatus == 'approved'">Approved</a>
   </li>
-  <li class="nav-item" *ngIf="authRole === role.manager">
+  <li class="nav-item" *ngIf="authRole === role.manager || authRole === role.admin">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('declined')"
        [class.active]="dashboardStatus == 'declined'">Declined</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('complete')"
        [class.active]="dashboardStatus == 'complete'">Complete</a>
+  </li>
+  <li class="nav-item" *ngIf="authRole === role.admin">
+    <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('inventoried')"
+       [class.active]="dashboardStatus == 'inventoried'">Inventoried</a>
   </li>
 </ul>
 <br>
@@ -23,10 +27,10 @@
     <th mat-sort-header="createdAt">Created Date</th>
     <th mat-sort-header="order_requester">Requester</th>
     <th mat-sort-header="order_vendor">Vendor</th>
-    <th *ngIf="authRole === role.accounting">Supervisor</th>
+    <th *ngIf="authRole === role.accounting || authRole === role.admin">Supervisor</th>
     <th>Status</th>
     <th>Request Detail</th>
-    <th *ngIf="dashboardStatus === 'pending' || (dashboardStatus === 'approved' && authRole === role.accounting)">Response</th>
+    <th *ngIf="dashboardStatus === 'pending' || (dashboardStatus === 'approved' && authRole === role.accounting) || authRole === role.admin">Response</th>
   </tr>
   </thead>
 
@@ -35,7 +39,7 @@
     <td>{{ request.createdAt | date:'medium' }}</td>
     <td>{{ request.requester }}</td>
     <td>{{ request.vendor.vendor_name }}</td>
-    <td *ngIf="authRole === role.accounting">{{ request.manager }}</td>
+    <td *ngIf="authRole === role.accounting || authRole === role.admin">{{ request.manager }}</td>
     <td>{{ request.status }}</td>
     <td>
       <button mat-raised-button (click)="viewDetail.emit(request)">View Detail</button>
@@ -50,6 +54,12 @@
     <td *ngIf="dashboardStatus === 'approved' && authRole === role.accounting">
         <button mat-raised-button class="btn btn-success" (click)="requestComplete.emit(request)">Complete</button>
     </td>
+    <td *ngIf="dashboardStatus === 'complete' && authRole === role.admin">
+      <button mat-raised-button class="btn btn-success" (click)="addToInventory.emit(request)">Add to Inventory</button>
+    </td>
   </tr>
   </tbody>
 </table>
+
+<!--display spinner if loading-->
+<mat-spinner *ngIf="(requests | async) == null"></mat-spinner>

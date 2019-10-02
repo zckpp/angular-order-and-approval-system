@@ -86,4 +86,43 @@ body {
   #contentToDownload.spinning {
     opacity: 0.3;
   }
+  // mt icons
+  .mat-icon-button {
+    outline: none;
+    &.large {
+      width: 50px;
+      height: 50px;
+      .mat-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        line-height: 48px;
+      }
+    }
+  }
+  // mt sidebar
+  .mat-drawer-container {
+    min-height: 100vh;
+    .sideBarMenu {
+      position: absolute;
+      top: 15px;
+      left: 15px;
+    }
+    .mat-sidenav {
+      a {
+        padding: 10px 20px;
+        display: block;
+        text-decoration: none;
+        &:hover {
+          background: $background-grey;
+        }
+        .mat-icon {
+          vertical-align: bottom;
+        }
+      }
+    }
+    .mat-drawer-content {
+      overflow: visible;
+    }
+  }
 }

@@ -18,13 +18,15 @@ export class RequestListComponent implements OnInit {
   @Output() requestApproved = new EventEmitter<any>();
   @Output() requestDeclined = new EventEmitter<any>();
   @Output() requestComplete = new EventEmitter<any>();
+  @Output() addToInventory = new EventEmitter<any>();
   @Output() statusChange = new EventEmitter<string>();
   @Output() sortData = new EventEmitter<any>();
   @Output() viewDetail = new EventEmitter<any>();
 
   role: {
     manager: string,
-    accounting: string
+    accounting: string,
+    admin: string
   }
 
   constructor() { }
@@ -33,7 +35,8 @@ export class RequestListComponent implements OnInit {
     // get user roles settings
     this.role = {
       manager: role_settings.manager,
-      accounting: role_settings.accounting
+      accounting: role_settings.accounting,
+      admin: role_settings.admin
     }
   }
 }
