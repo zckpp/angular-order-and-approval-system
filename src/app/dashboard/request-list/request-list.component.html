@@ -1,23 +1,23 @@
 <ul class="nav nav-pills">
   <li class="nav-item" *ngIf="authRole === role.manager || authRole === role.admin">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('pending')"
-       [class.active]="dashboardStatus == 'pending'">Pending</a>
+       [class.active]="dashboardStatus == 'pending'"><mat-icon>hourglass_full</mat-icon>Pending</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('approved')"
-       [class.active]="dashboardStatus == 'approved'">Approved</a>
+       [class.active]="dashboardStatus == 'approved'"><mat-icon>check_circle</mat-icon>Approved</a>
   </li>
   <li class="nav-item" *ngIf="authRole === role.manager || authRole === role.admin">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('declined')"
-       [class.active]="dashboardStatus == 'declined'">Declined</a>
+       [class.active]="dashboardStatus == 'declined'"><mat-icon>highlight_off</mat-icon>Declined</a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('complete')"
-       [class.active]="dashboardStatus == 'complete'">Complete</a>
+       [class.active]="dashboardStatus == 'complete'"><mat-icon>assignment_turned_in</mat-icon>Complete</a>
   </li>
   <li class="nav-item" *ngIf="authRole === role.admin">
     <a class="nav-link" href="javascript:void(0)" (click)="statusChange.emit('inventoried')"
-       [class.active]="dashboardStatus == 'inventoried'">Inventoried</a>
+       [class.active]="dashboardStatus == 'inventoried'"><mat-icon>archive</mat-icon>Inventoried</a>
   </li>
 </ul>
 <br>

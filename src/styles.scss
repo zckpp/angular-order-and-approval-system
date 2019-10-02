@@ -100,6 +100,11 @@ body {
       }
     }
   }
+  a {
+    .mat-icon {
+      vertical-align: bottom;
+    }
+  }
   // mt sidebar
   .mat-drawer-container {
     min-height: 100vh;
@@ -115,9 +120,6 @@ body {
         text-decoration: none;
         &:hover {
           background: $background-grey;
-        }
-        .mat-icon {
-          vertical-align: bottom;
         }
       }
     }
