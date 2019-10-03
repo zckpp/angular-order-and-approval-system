@@ -1,9 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Request} from './request';
+import {Inventory} from "./inventory";
 import {CategoryGroup} from './category';
 import {Observable} from 'rxjs';
 import {tap, map} from 'rxjs/operators';
+import {formatDate} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,7 @@ export class ApiService {
   ORDER_API = 'http://localhost:3000/orders';
   ITEM_API = 'http://localhost:3000/items';
   VENDOR = 'http://localhost:4200/assets/vendors.json';
+
   constructor(private httpClient: HttpClient) {
   }
 
@@ -58,7 +61,39 @@ export class ApiService {
     return this.httpClient.get<any>(this.VENDOR).pipe();
   }
 
+  readItems(): Observable<Inventory[]> {
+    return this.httpClient.get<Inventory[]>(this.ITEM_API).pipe(
+      // sort by created date
+      tap(items => {
+        items.sort((a, b) => {
+          if (a.createdAt < b.createdAt) {
+            return 1;
+          } else if (a.createdAt > b.createdAt) {
+            return -1;
+          }
+          return 0;
+        });
+      }),
+      tap(items => {
+        return items.map(item => {
+          return item.createdAt = dateFormatter(item.createdAt);
+        })
+      })
+    );
+  }
+
   createItems(request: Object): Observable<Object> {
     return this.httpClient.post<Object>(this.ITEM_API, request);
   }
+
+  updateItem(item: Inventory) {
+    return this.httpClient.put<Inventory>(`${this.ITEM_API}/${item._id}`, item);
+  }
+}
+// format date here for inventory component that uses ag grid
+function dateFormatter(date) {
+  const format = 'short';
+  const locale = 'en-US';
+  const formattedDate = formatDate(date, format, locale);
+  return formattedDate;
 }

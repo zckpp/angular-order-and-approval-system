@@ -1,0 +1,21 @@
+<h1 *ngIf="auth.role === role.admin">Gas Cylinder Inventory Dashboard</h1>
+<mat-card>
+  <h2 *ngIf="auth.role === 'invalid'">Please log into <a href="https://mycarnegie.carnegiescience.edu">myCarnegie</a>
+    first.</h2>
+  <br>
+  <!--display inventory if user is admin-->
+  <div *ngIf="auth.role === role.admin">
+    <ag-grid-angular
+      style="width: 100%; height: 500px;"
+      class="ag-theme-material"
+      [rowData]="inventory$ | async"
+      [columnDefs]="columnDefs"
+      [defaultColDef]="defaultColDef"
+      [stopEditingWhenGridLosesFocus]="true"
+      [pagination]="true"
+      (gridReady)="onGridReady($event)"
+      (cellValueChanged)="onCellValueChanged($event)"
+    >
+    </ag-grid-angular>
+  </div>
+</mat-card>

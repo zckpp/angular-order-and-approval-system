@@ -1,5 +1,8 @@
 /* Import material theme css */
 @import '@angular/material/prebuilt-themes/indigo-pink.css';
+//Import ag grid css
+@import "~ag-grid-community/dist/styles/ag-grid.css";
+@import "~ag-grid-community/dist/styles/ag-theme-material.css";
 
 $carnegie-dark-blue: #163671;
 $carnegie-light-blue: #5eb6cd;
@@ -26,14 +29,16 @@ body {
     font-weight: bold;
     color: $carnegie-dark-blue;
   }
+  /* logo */
+  img.logo {
+    max-width: 70px;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 1;
+  }
   .main-wrapper {
     padding-top: 20px;
-    /* logo */
-    img.logo {
-      max-width: 50px;
-      float: left;
-      margin-top: 1px;
-    }
     // material overlay select list
     .cdk-overlay-container {
       div.mat-select-panel {
@@ -103,6 +108,11 @@ body {
   a {
     .mat-icon {
       vertical-align: bottom;
+      -webkit-transition: all 0.5s ease;
+      -moz-transition: all 0.5s ease;
+      -o-transition: all 0.5s ease;
+      -ms-transition: all 0.5s ease;
+      transition: all 0.5s ease;
     }
   }
   // mt sidebar
@@ -126,5 +136,16 @@ body {
     .mat-drawer-content {
       overflow: visible;
     }
+  }
+  // ag-grid override
+  // table head
+  .ag-header-cell-label {
+    .ag-header-cell-text {
+      font-size: 16px;
+      color: black;
+    }
+  }
+  .ag-theme-material {
+    font-size: 1rem;
   }
 }

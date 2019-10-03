@@ -32,6 +32,8 @@ import {FormCategoryComponent} from './form-category/form-category.component';
 import {RequestDetailComponent} from './dashboard/request-detail/request-detail.component';
 import {RequestManagerNoteComponent} from './dashboard/request-manager-note/request-manager-note.component';
 import {RequestAccountingNoteComponent} from './dashboard/request-accounting-note/request-accounting-note.component';
+import {AgGridModule} from 'ag-grid-angular';
+import { InventoryComponent } from './inventory/inventory.component';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,7 @@ import {RequestAccountingNoteComponent} from './dashboard/request-accounting-not
     RequestDetailComponent,
     RequestManagerNoteComponent,
     RequestAccountingNoteComponent,
+    InventoryComponent,
   ],
   imports: [
     BrowserModule,
@@ -68,6 +71,7 @@ import {RequestAccountingNoteComponent} from './dashboard/request-accounting-not
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatIconModule,
+    AgGridModule.withComponents([]),
     NgbModule
   ],
   providers: [CookieService],

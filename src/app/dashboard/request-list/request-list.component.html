@@ -30,7 +30,10 @@
     <th *ngIf="authRole === role.accounting || authRole === role.admin">Supervisor</th>
     <th>Status</th>
     <th>Request Detail</th>
-    <th *ngIf="dashboardStatus === 'pending' || (dashboardStatus === 'approved' && authRole === role.accounting) || authRole === role.admin">Response</th>
+    <th *ngIf="
+    (dashboardStatus === 'pending' && authRole === role.manager) ||
+    (dashboardStatus === 'approved' && authRole === role.accounting) ||
+    (dashboardStatus === 'complete' && authRole === role.admin)">Response</th>
   </tr>
   </thead>
 
@@ -44,12 +47,10 @@
     <td>
       <button mat-raised-button (click)="viewDetail.emit(request)">View Detail</button>
     </td>
-    <td *ngIf="dashboardStatus === 'pending'">
-      <div *ngIf="authRole === role.manager">
+    <td *ngIf="dashboardStatus === 'pending' && authRole === role.manager">
         <button mat-raised-button class="btn btn-success" (click)="requestApproved.emit(request)">Approve</button>
         &nbsp;
         <button mat-raised-button class="btn btn-danger" (click)="requestDeclined.emit(request)">Decline</button>
-      </div>
     </td>
     <td *ngIf="dashboardStatus === 'approved' && authRole === role.accounting">
         <button mat-raised-button class="btn btn-success" (click)="requestComplete.emit(request)">Complete</button>

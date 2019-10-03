@@ -48,7 +48,7 @@ export class DashboardComponent implements OnInit {
     this.auth = {
       name: 'invalid',
       role: 'invalid'
-    }
+    };
     // get cookie value from cookieAuth service
     this.cookieService.cookie_name.subscribe(name => {
         this.auth.name = name;
@@ -145,6 +145,7 @@ export class DashboardComponent implements OnInit {
         });
       } else alert("Operation failed on database, please try again.");
     });
+    this.updateRequest(request, 'inventoried');
   }
 
   // Mat dialog for view request detail
