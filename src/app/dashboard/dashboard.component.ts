@@ -122,6 +122,7 @@ export class DashboardComponent implements OnInit {
       ),
       map(
         (requests) => {
+          // filter by current dashboard status
           return requests.filter((request) => {
             return request.status.includes(status);
           });

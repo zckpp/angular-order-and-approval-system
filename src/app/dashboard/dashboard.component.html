@@ -2,7 +2,7 @@
 <h1 *ngIf="auth.role === role.accounting">Gas Cylinder Order Accounting Dashboard</h1>
 <h1 *ngIf="auth.role === role.admin">Gas Cylinder Order Admin Dashboard</h1>
 <br>
-<mat-card>
+<mat-card *ngIf="(requests$ | async) as requests">
   <h2 *ngIf="auth.role === 'invalid'">Please log into <a href="https://mycarnegie.carnegiescience.edu">myCarnegie</a>
     first.</h2>
 
@@ -10,7 +10,7 @@
   <!--display requests if authed-->
   <div *ngIf="auth.role !== 'invalid'">
     <app-request-list
-      [requests]="requests$"
+      [requests]="requests"
       [dashboardStatus]="dashboardStatus"
       [pageSize]="pageEvent?pageEvent.pageSize:this.pageSize"
       [pageIndex]="pageEvent?pageEvent.pageIndex:0"
@@ -24,7 +24,7 @@
       (viewDetail)="openDialog($event)"
     >
     </app-request-list>
-    <mat-paginator [length]="(requests$ | async)?.length"
+    <mat-paginator [length]="requests.length"
                    [pageSize]="pageSize"
                    [pageSizeOptions]="pageSizeOptions"
                    (page)="pageEvent = $event">

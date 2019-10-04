@@ -38,7 +38,7 @@
   </thead>
 
   <tbody>
-  <tr *ngFor="let request of requests | async | slice:(pageSize*pageIndex):(pageSize*pageIndex+pageSize)">
+  <tr *ngFor="let request of requests | slice:(pageSize*pageIndex):(pageSize*pageIndex+pageSize)">
     <td>{{ request.createdAt | date:'medium' }}</td>
     <td>{{ request.requester }}</td>
     <td>{{ request.vendor.vendor_name }}</td>
@@ -63,4 +63,4 @@
 </table>
 
 <!--display spinner if loading-->
-<mat-spinner *ngIf="(requests | async) == null"></mat-spinner>
+<mat-spinner *ngIf="requests == null"></mat-spinner>
