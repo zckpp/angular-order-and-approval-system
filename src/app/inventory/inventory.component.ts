@@ -4,7 +4,6 @@ import {CookieAuthService} from '../cookie-auth.service';
 import {role_settings} from "../app_settings";
 import {Observable} from "rxjs";
 import {Inventory} from "../inventory";
-import {formatDate} from "@angular/common";
 import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
@@ -60,7 +59,7 @@ export class InventoryComponent implements OnInit {
     // init ag grid
     this.columnDefs = [
       {headerName: 'Created Date', field: 'createdAt', sortable: true},
-      {headerName: 'Item ID(editable)', field: 'item_id', sortable: true, editable: true},
+      {headerName: 'Item ID (editable)', field: 'item_id', sortable: true, editable: true},
       {headerName: 'Item Name', field: 'item_name', sortable: true},
       {headerName: 'Unit Price', field: 'item_unit_price', sortable: true, valueFormatter: currencyFormatter},
       {headerName: 'Supervisor', field: 'manager', sortable: true},
@@ -78,18 +77,23 @@ export class InventoryComponent implements OnInit {
   }
 
   onCellValueChanged(event) {
-    this.apiService.updateItem(event.data).subscribe((response: any) => {
-      console.log(response);
-      // if succeed, then update request list view
-      if (response.status == 200) {
-        // set up snackBar pop up
-        this.snackBar.open('Item is updated successfully!', 'close', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: 'approve'
-        });
-      } else alert("Operation failed on database, please try again.");
-    });
+    if (event.oldValue !== event.newValue) {
+      this.apiService.updateItem(event.data).subscribe((response: any) => {
+        console.log(response);
+        // if succeed, then update request list view
+        if (response.status == 200) {
+          // set up snackBar pop up
+          this.snackBar.open('Item is updated successfully!', 'close', {
+            duration: 3000,
+            verticalPosition: 'top',
+            panelClass: 'approve'
+          });
+        } else {
+          alert("Operation failed on database, please try again or contact admin.");
+          window.location.reload();
+        };
+      });
+    }
   }
 }
 // currency formatter for ng-grid

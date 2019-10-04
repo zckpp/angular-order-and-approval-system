@@ -88,6 +88,10 @@
             <mat-form-field class="col-md-6 col-sm-12">
               <input matInput placeholder="Description" formControlName="order_description">
             </mat-form-field>
+            <!--show remove button unless only one order group left-->
+            <div class="col-md-6 col-sm-12">
+              <button mat-raised-button *ngIf="i !== 0" class="order-remove btn-danger" (click)="this.removeItem(i)">Remove This Order</button>
+            </div>
           </div>
         </div>
       </div>

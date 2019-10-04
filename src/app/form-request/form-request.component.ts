@@ -95,6 +95,10 @@ export class FormRequestComponent implements OnInit {
     this.order_items = this.requestForm.get('order_items') as FormArray;
     this.order_items.push(this.createItem());
   }
+  removeItem(index): void {
+    this.order_items = this.requestForm.get('order_items') as FormArray;
+    this.order_items.removeAt(index);
+  }
 
   // auto fill vendor info
   vendorInfo() {

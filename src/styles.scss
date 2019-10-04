@@ -4,6 +4,7 @@
 @import "~ag-grid-community/dist/styles/ag-grid.css";
 @import "~ag-grid-community/dist/styles/ag-theme-material.css";
 
+// color configs
 $carnegie-dark-blue: #163671;
 $carnegie-light-blue: #5eb6cd;
 $carnegie-brown: #c49a6c;
@@ -47,7 +48,7 @@ body {
     }
     /* Snackbar css */
     .grant .mat-simple-snackbar, .approve .mat-simple-snackbar {
-      color: green;
+      color: $carnegie-green;
     }
     .decline .mat-simple-snackbar {
       color: $red;
@@ -69,12 +70,21 @@ body {
         background: $red;
         color: white;
       }
+      &.order-remove {
+        margin-top: 10px;
+        float: right;
+      }
     }
+    // dashboard status nav button
     .nav-pills {
       .nav-link.active {
         box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
         background: $carnegie-light-blue;
       }
+    }
+    // spinner centering
+    .mat-progress-spinner {
+      margin: 0 auto;
     }
   }
   // textarea field in pop up
@@ -145,7 +155,12 @@ body {
       color: black;
     }
   }
+  // font size
   .ag-theme-material {
     font-size: 1rem;
+  }
+  // striped row
+  .ag-row-even {
+    background-color: rgba(0,0,0,.05);
   }
 }
