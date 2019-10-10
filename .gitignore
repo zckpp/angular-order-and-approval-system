@@ -37,3 +37,7 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+# app settings
+/src/app/cookie-auth.service.ts
+/src/app/app_settings.ts

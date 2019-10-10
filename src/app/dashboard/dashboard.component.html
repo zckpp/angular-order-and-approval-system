@@ -2,7 +2,7 @@
 <h1 *ngIf="auth.role === role.accounting">Gas Cylinder Order Accounting Dashboard</h1>
 <h1 *ngIf="auth.role === role.admin">Gas Cylinder Order Admin Dashboard</h1>
 <br>
-<mat-card *ngIf="(requests$ | async) as requests">
+<mat-card *ngIf="(requests$ | async) as requests; else spinner">
   <h2 *ngIf="auth.role === 'invalid'">Please log into <a href="https://mycarnegie.carnegiescience.edu">myCarnegie</a>
     first.</h2>
 
@@ -31,3 +31,7 @@
     </mat-paginator>
   </div>
 </mat-card>
+<!--display spinner if loading-->
+<ng-template #spinner>
+  <mat-spinner></mat-spinner>
+</ng-template>
