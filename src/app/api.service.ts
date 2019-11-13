@@ -15,6 +15,8 @@ export class ApiService {
   ITEM_API = 'http://localhost:3000/items';
   VENDOR = 'http://localhost:4200/assets/vendors.json';
 
+  // "Request" means the gas cylinder order, which can contain multiple cylinders, the "Item" means each gas cylinder record generated from the order.
+
   constructor(private httpClient: HttpClient) {
   }
 

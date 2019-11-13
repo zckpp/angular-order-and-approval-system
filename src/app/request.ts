@@ -9,6 +9,7 @@ export interface Request {
     vendor_fax: string
   };
   manager: string,
+  manager_email: string,
   manager_note: string,
   shipment_cost: number,
   total_cost: number,

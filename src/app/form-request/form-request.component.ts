@@ -52,6 +52,7 @@ export class FormRequestComponent implements OnInit {
         vendor_fax: ['']
       }),
       manager: ['', [Validators.required, validateManager]],
+      manager_email: [''],
       shipment_cost: [''],
       total_cost: [{value: ''}],
       authorized: [''],
@@ -71,7 +72,9 @@ export class FormRequestComponent implements OnInit {
 
     // auto calculate total price, and init total price with 0 otherwise it will show [object object]
     this.calculateTotalPrice();
+    // vendor info and manager email auto fill
     this.vendorInfo();
+    this.managerEmail();
     this.requestForm.get('total_cost').setValue(0, {emitEvent: false});
   }
 
@@ -118,6 +121,23 @@ export class FormRequestComponent implements OnInit {
       this.requestForm.get('vendor.vendor_address').setValue(val.vendor_address, {emitEvent: false});
       this.requestForm.get('vendor.vendor_phone').setValue(val.vendor_phone, {emitEvent: false});
       this.requestForm.get('vendor.vendor_fax').setValue(val.vendor_fax, {emitEvent: false});
+    });
+  }
+
+  // auto fill manager email
+  managerEmail() {
+    this.requestForm.get('manager').valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+    ).subscribe(val => {
+      if (val) {
+        const manager = this.managers.filter(manager => manager.name == val)[0];
+        // check if value match any of the manager name first before access the email attribute
+        if (manager != undefined) {
+          const managerEmail = manager.email;
+          this.requestForm.get('manager_email').setValue(managerEmail, {emitEvent: false});
+        }
+      }
     });
   }
 
