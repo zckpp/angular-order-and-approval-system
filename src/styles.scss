@@ -38,6 +38,21 @@ body {
     bottom: 15px;
     z-index: 1;
   }
+  // button override
+  .mat-raised-button {
+    &.btn-success {
+      background: $carnegie-green;
+      color: white;
+    }
+    &.btn-danger {
+      background: $red;
+      color: white;
+    }
+    &.order-remove {
+      margin-top: 10px;
+      float: right;
+    }
+  }
   .main-wrapper {
     padding-top: 20px;
     // material overlay select list
@@ -59,21 +74,6 @@ body {
     // form field group
     .field-group {
       padding: 30px 0 45px;
-    }
-    // button override
-    .mat-raised-button {
-      &.btn-success {
-        background: $carnegie-green;
-        color: white;
-      }
-      &.btn-danger {
-        background: $red;
-        color: white;
-      }
-      &.order-remove {
-        margin-top: 10px;
-        float: right;
-      }
     }
     // dashboard status nav button
     .nav-pills {

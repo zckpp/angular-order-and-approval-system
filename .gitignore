@@ -41,3 +41,4 @@ Thumbs.db
 # app settings
 /src/app/cookie-auth.service.ts
 /src/app/app_settings.ts
+/src/app/api.service.ts

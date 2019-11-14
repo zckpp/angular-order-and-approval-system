@@ -68,7 +68,7 @@
     <div class="field-group">
       <br>
       <h3>Order Info</h3>
-      <div formArrayName="order_items" *ngFor="let item of requestForm.get('order_items').controls; let i = index;">
+      <div formArrayName="order_items" *ngFor="let item of requestForm.get('order_items')['controls']; let i = index;">
         <div [formGroupName]="i">
           <div class="row">
             <mat-form-field class="col-md-4 col-sm-12">

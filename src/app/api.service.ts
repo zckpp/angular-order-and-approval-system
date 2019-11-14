@@ -2,21 +2,23 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Request} from './request';
 import {Inventory} from "./inventory";
-import {CategoryGroup} from './category';
-import {Observable} from 'rxjs';
-import {tap, map} from 'rxjs/operators';
+import {Observable, timer} from 'rxjs';
+import {tap, map, retryWhen, delayWhen} from 'rxjs/operators';
 import {formatDate} from "@angular/common";
 
 @Injectable({
   providedIn: 'root'
 })
 export class ApiService {
-  ORDER_API = 'http://localhost:3000/orders';
-  ITEM_API = 'http://localhost:3000/items';
-  VENDOR = 'http://localhost:4200/assets/vendors.json';
+  // ORDER_API = 'http://localhost:3000/orders';
+  // ITEM_API = 'http://localhost:3000/items';
+  // VENDOR = 'http://localhost:4200/assets/vendors.json';
+
+  ORDER_API = 'https://hq-web4.carnegiescience.edu:3000/orders';
+  ITEM_API = 'https://hq-web4.carnegiescience.edu:3000/items';
+  VENDOR = './assets/vendors.json';
 
   // "Request" means the gas cylinder order, which can contain multiple cylinders, the "Item" means each gas cylinder record generated from the order.
-
   constructor(private httpClient: HttpClient) {
   }
 
@@ -32,7 +34,14 @@ export class ApiService {
           }
           return 0;
         });
-      })
+      }),
+      retryWhen(errors => {
+        return errors
+          .pipe(
+            delayWhen(() => timer(2000)),
+            tap(() => console.log('retrying...'))
+          );
+      } )
     );
   }
 
@@ -80,7 +89,14 @@ export class ApiService {
         return items.map(item => {
           return item.createdAt = dateFormatter(item.createdAt);
         })
-      })
+      }),
+      retryWhen(errors => {
+        return errors
+          .pipe(
+            delayWhen(() => timer(2000)),
+            tap(() => console.log('retrying...'))
+          );
+      } )
     );
   }
 

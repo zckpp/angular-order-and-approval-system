@@ -12,6 +12,7 @@ import {role_settings} from "../app_settings";
 import {RequestDetailComponent} from "./request-detail/request-detail.component";
 import {RequestManagerNoteComponent} from "./request-manager-note/request-manager-note.component";
 import {RequestAccountingNoteComponent} from "./request-accounting-note/request-accounting-note.component";
+import {RequestManagerDeclineComponent} from "./request-manager-decline/request-manager-decline.component";
 
 @Component({
   selector: 'app-dashboard',
@@ -35,7 +36,6 @@ export class DashboardComponent implements OnInit {
     accounting: string,
     admin: string
   }
-  user_email: string;
 
   constructor(
     private apiService: ApiService,
@@ -103,16 +103,12 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  declineRequest(request: Request) {
-    this.updateRequest(request, 'declined');
-  }
-
   // get different view based on status then pass it down to request list display
   changeStatus(status) {
     this.requests$ = this.apiService.readRequests().pipe(
       map(
         (requests) => {
-          // filter by manager's name
+          // filter by manager's name only if the user role is manager
           if (this.auth.role == this.role.manager) {
             return requests.filter((request) => {
               return request.manager == this.auth.name;
@@ -132,23 +128,6 @@ export class DashboardComponent implements OnInit {
     this.dashboardStatus = status;
   }
 
-  // generate individual purchased items from order request
-  addItems(request: Request): void {
-    this.apiService.createItems(request).subscribe((response: any) => {
-      console.log(response);
-      // if succeed, then update request list view
-      if (response.status == 200) {
-        this.changeStatus(this.dashboardStatus);
-        this.snackBar.open('Items from order request ares generated!', 'close', {
-          duration: 3000,
-          verticalPosition: 'top',
-          panelClass: 'approve'
-        });
-      } else alert("Operation failed on database, please try again.");
-    });
-    this.updateRequest(request, 'inventoried');
-  }
-
   // Mat dialog for view request detail
   openDialog(request: Request): void {
     const dialogRef = this.dialog.open(RequestDetailComponent, {
@@ -160,7 +139,7 @@ export class DashboardComponent implements OnInit {
     });
   }
 
-  // Mat dialog for approve request with adding a manager note
+  // Mat dialog for approving request with adding a manager note
   approveRequest(request: Request): void {
     const dialogRefNote = this.dialog.open(RequestManagerNoteComponent, {
       width: '1000px',
@@ -170,6 +149,20 @@ export class DashboardComponent implements OnInit {
       console.log('The dialog was closed');
       if (result) {
         this.updateRequest(result, 'approved');
+      }
+    });
+  }
+
+  // Mat dialog for declining request
+  declineRequest(request: Request) {
+    const dialogRefNote = this.dialog.open(RequestManagerDeclineComponent, {
+      width: '1000px',
+      data: request
+    });
+    dialogRefNote.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      if (result) {
+        this.updateRequest(result, 'declined');
       }
     });
   }
@@ -186,6 +179,23 @@ export class DashboardComponent implements OnInit {
         this.updateRequest(result, 'complete');
       }
     });
+  }
+
+  // generate individual purchased items from order request
+  addItems(request: Request): void {
+    this.apiService.createItems(request).subscribe((response: any) => {
+      console.log(response);
+      // if succeed, then update request list view
+      if (response.status == 200) {
+        this.changeStatus(this.dashboardStatus);
+        this.snackBar.open('Items from order request ares generated!', 'close', {
+          duration: 3000,
+          verticalPosition: 'top',
+          panelClass: 'approve'
+        });
+      } else alert("Operation failed on database, please try again.");
+    });
+    this.updateRequest(request, 'inventoried');
   }
 
   // Mat Sort
@@ -225,5 +235,4 @@ export class DashboardComponent implements OnInit {
   pageEvent: PageEvent;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25];
-
 }

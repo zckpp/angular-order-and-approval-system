@@ -1,0 +1,19 @@
+<div mat-dialog-content>
+  <div class="row">
+    <div class="col-md-12">Are you sure you want to decline the request from <strong>{{ data.requester }}</strong>?</div>
+  </div>
+  <br>
+  <div class="row">
+    <mat-form-field class="col-md-12">
+      <p>Reason for Decline: </p>
+      <textarea matInput [(ngModel)]="data.manager_note" rows="6"></textarea>
+    </mat-form-field>
+  </div>
+  <br>
+</div>
+
+<div mat-dialog-actions>
+  <br>
+  <button [mat-dialog-close]="data" class="btn btn-danger mat-raised-button">Decline</button>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+</div>

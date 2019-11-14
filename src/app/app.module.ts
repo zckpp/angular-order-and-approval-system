@@ -34,6 +34,7 @@ import {RequestManagerNoteComponent} from './dashboard/request-manager-note/requ
 import {RequestAccountingNoteComponent} from './dashboard/request-accounting-note/request-accounting-note.component';
 import {AgGridModule} from 'ag-grid-angular';
 import { InventoryComponent } from './inventory/inventory.component';
+import { RequestManagerDeclineComponent } from './dashboard/request-manager-decline/request-manager-decline.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { InventoryComponent } from './inventory/inventory.component';
     RequestManagerNoteComponent,
     RequestAccountingNoteComponent,
     InventoryComponent,
+    RequestManagerDeclineComponent,
   ],
   imports: [
     BrowserModule,
@@ -76,10 +78,12 @@ import { InventoryComponent } from './inventory/inventory.component';
   ],
   providers: [CookieService],
   bootstrap: [AppComponent],
+  // Need to add mat dialog components here:
   entryComponents: [
     RequestDetailComponent,
     RequestManagerNoteComponent,
-    RequestAccountingNoteComponent
+    RequestAccountingNoteComponent,
+    RequestManagerDeclineComponent,
   ]
 })
 export class AppModule {
