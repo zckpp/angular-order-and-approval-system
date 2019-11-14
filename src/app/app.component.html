@@ -1,17 +1,19 @@
 <mat-sidenav-container>
   <mat-sidenav #sidenav mode="side" [(opened)]="sideOpen">
-    <a href="form">
-      <mat-icon>assignment</mat-icon>
-      Order Form
-    </a>
-    <a href="dashboard">
-      <mat-icon>account_box</mat-icon>
-      Admin Dashboard
-    </a>
-    <a href="inventory">
-      <mat-icon>dashboard</mat-icon>
-      Inventory Dashboard
-    </a>
+    <div *ngIf="auth_role === role.admin">
+      <a href="form">
+        <mat-icon>assignment</mat-icon>
+        Order Form
+      </a>
+      <a href="dashboard">
+        <mat-icon>account_box</mat-icon>
+        Admin Dashboard
+      </a>
+      <a href="inventory">
+        <mat-icon>dashboard</mat-icon>
+        Inventory Dashboard
+      </a>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <!--Only show sidebar menu options for admin-->
@@ -20,7 +22,9 @@
       <mat-icon *ngIf="!sideOpen">menu</mat-icon>
     </button>
     <div class="container main-wrapper">
-      <router-outlet></router-outlet>
+      <!--Show anonymous user the login link-->
+      <h2 *ngIf="auth_role === ''">Please login to MyCarnegie first.</h2>
+      <router-outlet  *ngIf="auth_role !== ''"></router-outlet>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
