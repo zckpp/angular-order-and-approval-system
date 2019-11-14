@@ -37,7 +37,7 @@ export class FormRequestComponent implements OnInit {
   // init autocomplete field: manager
   filteredOptions: Observable<Manager[]>;
   // variable if request is successfully submitted
-  succeed: boolean = null;
+  succeed: string = null;
 
   ngOnInit() {
     this.vendors$ = this.apiService.readVendors();
@@ -160,18 +160,17 @@ export class FormRequestComponent implements OnInit {
   onSubmit() {
     let newRequest = this.requestForm.value;
     newRequest.status = 'pending';
-    console.log(newRequest);
     this.apiService.createRequest(newRequest).subscribe((response: any) => {
-      // status response configured in php app
-      console.log(response.status);
+      // tell user we are waiting for response
+      this.succeed = 'waiting';
       // if succeed, display success alert
       if (response.status == 200) {
-        this.succeed = true;
+        this.succeed = 'succeed';
         // refresh page in 3 seconds
         setTimeout(() => {
           window.location.reload();
         }, 3000);
-      } else this.succeed = false;
+      } else this.succeed = 'failed';
     });
   }
 }

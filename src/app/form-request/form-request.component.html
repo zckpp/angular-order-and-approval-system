@@ -116,10 +116,11 @@
 
       <div class="row">
         <div class="col-md-12">
-          <ngb-alert *ngIf="succeed === true" type="success" [dismissible]="false">Your request is submitted successfully. This
+          <mat-spinner *ngIf="succeed === 'waiting'"></mat-spinner>
+          <ngb-alert *ngIf="succeed === 'succeed'" type="success" [dismissible]="false">Your request is submitted successfully. This
             page will refresh in 3 seconds.
           </ngb-alert>
-          <ngb-alert *ngIf="succeed === false" type="danger" [dismissible]="false">There was something wrong in the system.
+          <ngb-alert *ngIf="succeed === 'failed'" type="danger" [dismissible]="false">There was something wrong in the system.
             Please try again or contact admin.
           </ngb-alert>
           <br>
