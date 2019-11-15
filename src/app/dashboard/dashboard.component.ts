@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ApiService} from '../api.service';
 import {Request} from '../request';
 import {map, tap} from 'rxjs/operators';
@@ -8,6 +8,7 @@ import {PageEvent} from '@angular/material/paginator';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Sort} from '@angular/material/sort';
 import {MatDialog} from '@angular/material/dialog';
+import {MatPaginator} from '@angular/material';
 import {role_settings} from "../app_settings";
 import {RequestDetailComponent} from "./request-detail/request-detail.component";
 import {RequestManagerNoteComponent} from "./request-manager-note/request-manager-note.component";
@@ -42,7 +43,8 @@ export class DashboardComponent implements OnInit {
     private cookieService: CookieAuthService,
     private snackBar: MatSnackBar,
     public dialog: MatDialog
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.auth = {
@@ -126,6 +128,10 @@ export class DashboardComponent implements OnInit {
       ),
     );
     this.dashboardStatus = status;
+    // reset paginator after changing dashboard status
+    if (this.paginator !== undefined) {
+      this.resetPage();
+    }
   }
 
   // Mat dialog for view request detail
@@ -232,6 +238,12 @@ export class DashboardComponent implements OnInit {
   }
 
   // MatPaginator Output
+  @ViewChild(MatPaginator, {static: false}) paginator: MatPaginator;
+
+  resetPage() {
+    this.paginator.firstPage();
+  }
+
   pageEvent: PageEvent;
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25];
