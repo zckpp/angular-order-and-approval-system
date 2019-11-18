@@ -24,17 +24,6 @@ export class ApiService {
 
   readRequests(): Observable<Request[]> {
     return this.httpClient.get<Request[]>(this.ORDER_API).pipe(
-      // sort by created date
-      tap(requests => {
-        requests.sort((a, b) => {
-          if (a.createdAt < b.createdAt) {
-            return 1;
-          } else if (a.createdAt > b.createdAt) {
-            return -1;
-          }
-          return 0;
-        });
-      }),
       retryWhen(errors => {
         return errors
           .pipe(
@@ -74,17 +63,6 @@ export class ApiService {
 
   readItems(): Observable<Inventory[]> {
     return this.httpClient.get<Inventory[]>(this.ITEM_API).pipe(
-      // sort by created date
-      tap(items => {
-        items.sort((a, b) => {
-          if (a.createdAt < b.createdAt) {
-            return 1;
-          } else if (a.createdAt > b.createdAt) {
-            return -1;
-          }
-          return 0;
-        });
-      }),
       tap(items => {
         return items.map(item => {
           return item.createdAt = dateFormatter(item.createdAt);
