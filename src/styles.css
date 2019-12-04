@@ -1,0 +1,102 @@
+/* Import material theme css */
+@import url(@angular/material/prebuilt-themes/indigo-pink.css);
+@import url(~ag-grid-community/dist/styles/ag-grid.css);
+@import url(~ag-grid-community/dist/styles/ag-theme-material.css);
+html, body {
+  background-color: #f9f9f9;
+  height: 100%; }
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", sans-serif;
+  /* logo */ }
+  body a {
+    color: #5eb6cd; }
+    body a:hover {
+      color: #163671; }
+  body h1 {
+    text-align: center;
+    font-weight: bold;
+    color: #163671; }
+  body img.logo {
+    max-width: 70px;
+    position: fixed;
+    right: 15px;
+    bottom: 15px;
+    z-index: 1; }
+  body .mat-raised-button.btn-success {
+    background: #96ca4f;
+    color: white; }
+  body .mat-raised-button.btn-danger {
+    background: #e45832;
+    color: white; }
+  body .mat-raised-button.order-remove {
+    margin-top: 10px;
+    float: right; }
+  body .main-wrapper {
+    padding-top: 20px;
+    /* Snackbar css */ }
+    body .main-wrapper .cdk-overlay-container div.mat-select-panel {
+      max-height: 350px; }
+    body .main-wrapper .grant .mat-simple-snackbar, body .main-wrapper .approve .mat-simple-snackbar {
+      color: #96ca4f; }
+    body .main-wrapper .decline .mat-simple-snackbar {
+      color: #e45832; }
+    body .main-wrapper .mat-snack-bar-container {
+      background: #fdfdfd; }
+    body .main-wrapper .field-group {
+      padding: 30px 0 45px; }
+    body .main-wrapper .nav-pills .nav-link.active {
+      box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12);
+      background: #5eb6cd; }
+    body .main-wrapper .mat-progress-spinner {
+      margin: 0 auto; }
+  body textarea.mat-input-element {
+    border: 1px solid lightgray; }
+  body .pdf-spinner {
+    position: absolute;
+    top: 40%;
+    left: 45%;
+    z-index: 9999; }
+  body #contentToDownload.spinning {
+    opacity: 0.3; }
+  body .mat-icon-button {
+    outline: none; }
+    body .mat-icon-button.large {
+      width: 50px;
+      height: 50px; }
+      body .mat-icon-button.large .mat-icon {
+        font-size: 48px;
+        width: 48px;
+        height: 48px;
+        line-height: 48px; }
+  body a .mat-icon {
+    vertical-align: bottom;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    -ms-transition: all 0.5s ease;
+    transition: all 0.5s ease; }
+  body .mat-drawer-container {
+    min-height: 100vh; }
+    body .mat-drawer-container .sideBarMenu {
+      position: absolute;
+      top: 15px;
+      left: 15px; }
+    body .mat-drawer-container .mat-sidenav a {
+      padding: 10px 20px;
+      display: block;
+      text-decoration: none; }
+      body .mat-drawer-container .mat-sidenav a:hover {
+        background: #f9f9f9; }
+    body .mat-drawer-container .mat-drawer-content {
+      overflow: visible; }
+  body .ag-header-cell-label .ag-header-cell-text {
+    font-size: 16px;
+    color: black; }
+  body .ag-theme-material {
+    font-size: 1rem; }
+  body .ag-row-even {
+    background-color: rgba(0, 0, 0, 0.05); }
+
+/*# sourceMappingURL=styles.css.map */

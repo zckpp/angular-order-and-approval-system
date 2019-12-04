@@ -30,13 +30,13 @@ export class DashboardComponent implements OnInit {
   auth: {
     name: string,
     role: string
-  }
+  };
   // local variable for user roles settings
   role: {
     manager: string,
     accounting: string,
     admin: string
-  }
+  };
 
   constructor(
     private apiService: ApiService,
@@ -65,7 +65,7 @@ export class DashboardComponent implements OnInit {
       manager: role_settings.manager,
       accounting: role_settings.accounting,
       admin: role_settings.admin
-    }
+    };
     // start with request list with pending for manger and approved for accounting
     if (this.auth.role === this.role.manager || this.auth.role === this.role.admin) this.changeStatus('pending');
     else if (this.auth.role === this.role.accounting) this.changeStatus('approved');
@@ -140,7 +140,7 @@ export class DashboardComponent implements OnInit {
       width: '1000px',
       data: request
     });
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe(() => {
       console.log('The dialog was closed');
     });
   }
